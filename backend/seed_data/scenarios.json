@@ -1,0 +1,46 @@
+[
+  {
+    "id": "smart-home",
+    "title": "Smart Home Automation",
+    "difficulty": "Beginner",
+    "problem": "Design rules so a room's fan, lights and buzzer respond sensibly to temperature, light and motion.",
+    "objectives": [
+      "Translate requirements into threshold rules.",
+      "Observe how readings trigger actuators.",
+      "Avoid conflicting or wasteful rules."
+    ]
+  },
+  {
+    "id": "safety-system",
+    "title": "Intelligent Safety System",
+    "difficulty": "Intermediate",
+    "problem": "Configure gas and smoke thresholds so alarms trigger for hazards but not for normal cooking fluctuations.",
+    "objectives": [
+      "Set alarm thresholds with safety margins.",
+      "Understand false positives vs false negatives.",
+      "Escalate responses by severity."
+    ]
+  },
+  {
+    "id": "environment-monitoring",
+    "title": "IoT Environmental Monitoring",
+    "difficulty": "Beginner",
+    "problem": "Monitor a classroom's temperature, humidity and air quality and raise alerts when comfort or health limits are exceeded.",
+    "objectives": [
+      "Classify readings into status bands.",
+      "Track readings over a simulated day.",
+      "Relate thresholds to health guidelines."
+    ]
+  },
+  {
+    "id": "communication-network",
+    "title": "Intelligent Communication Network",
+    "difficulty": "Advanced",
+    "problem": "Tune signal power, bandwidth and load so a multi-hop wireless link delivers video with low loss and latency.",
+    "objectives": [
+      "Relate SNR to capacity (Shannon).",
+      "See how congestion causes loss and delay.",
+      "Balance throughput against latency."
+    ]
+  }
+]

@@ -1,10 +1,16 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import { isBackendConfigured, progressApi } from "@/services/api";
+import { useSession } from "@/stores/session";
+
 /**
  * Learning activity recorded on this device (browser storage).
- * This is NOT server persistence — when the backend is connected,
- * events are additionally posted to /api/v1/activities.
+ * When the backend is connected and the session is a real backend session,
+ * events are additionally posted to /api/v1/activities (fire-and-forget).
+ * Quiz attempts are the exception: the quiz submit endpoint persists them
+ * server-side with the authoritative score, so re-posting here would
+ * double-count them.
  */
 export type ActivityEvent =
   | { type: "lesson_completed"; courseId: string; lessonId: string; at: number }
@@ -17,6 +23,13 @@ export type ActivityEvent =
 
 type NoAt<T> = T extends unknown ? Omit<T, "at"> : never;
 
+function syncToServer(e: NoAt<ActivityEvent>) {
+  if (!isBackendConfigured()) return;
+  if (useSession.getState().mode !== "backend") return;
+  if (e.type === "quiz_attempt") return;
+  progressApi.record(e).catch(() => undefined);
+}
+
 interface ProgressState {
   events: ActivityEvent[];
   record: (e: NoAt<ActivityEvent>) => void;
@@ -28,7 +41,10 @@ export const useProgress = create<ProgressState>()(
   persist(
     (set) => ({
       events: [],
-      record: (e) => set((s) => ({ events: [...s.events, { ...e, at: Date.now() } as ActivityEvent] })),
+      record: (e) => {
+        set((s) => ({ events: [...s.events, { ...e, at: Date.now() } as ActivityEvent] }));
+        syncToServer(e);
+      },
       uncompleteLesson: (courseId, lessonId) =>
         set((s) => ({ events: s.events.filter((e) => !(e.type === "lesson_completed" && e.courseId === courseId && e.lessonId === lessonId)) })),
       reset: () => set({ events: [] }),

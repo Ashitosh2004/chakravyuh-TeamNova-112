@@ -1,0 +1,2470 @@
+[
+  {
+    "id": "digital-electronics",
+    "title": "Digital Electronics",
+    "short": "Binary, Boolean algebra, logic gates and sequential circuits.",
+    "overview": "Digital electronics represents information with two voltage levels and processes it with logic gates. This course builds from number systems through Boolean algebra and Karnaugh maps to combinational and sequential circuits — the foundation of every processor and microcontroller.",
+    "difficulty": "Beginner",
+    "hours": 9,
+    "objectives": [
+      "Convert between binary, decimal, octal and hexadecimal.",
+      "Simplify Boolean expressions using algebraic laws and K-maps.",
+      "Predict the output of any basic gate and build truth tables.",
+      "Design simple combinational circuits such as adders and multiplexers.",
+      "Explain how flip-flops store a single bit of state."
+    ],
+    "prerequisites": [],
+    "activities": [
+      {
+        "label": "Logic Gate Laboratory",
+        "href": "/lab/logic-gates"
+      },
+      {
+        "label": "Digital Circuit Builder",
+        "href": "/lab/circuit-builder"
+      },
+      {
+        "label": "Circuit Logic Puzzle",
+        "href": "/quizzes/game-circuit-puzzle"
+      }
+    ],
+    "quizIds": [
+      "digital-basics",
+      "game-rapid-logic"
+    ],
+    "modules": [
+      {
+        "id": "numbers",
+        "title": "Number Systems",
+        "lessons": [
+          {
+            "id": "binary-numbers",
+            "title": "Binary Numbers",
+            "minutes": 12,
+            "summary": "Why digital systems use base-2 and how place value works in binary.",
+            "sections": [
+              {
+                "heading": "Two states are robust",
+                "body": [
+                  "A digital circuit only needs to distinguish two voltage ranges — for example 0–0.8 V as logic 0 and 2–5 V as logic 1 in classic TTL. Small amounts of noise do not change which range a signal falls into, so information survives copying and transmission.",
+                  "Each two-valued digit is a bit. Groups of 4 bits form a nibble and 8 bits form a byte."
+                ]
+              },
+              {
+                "heading": "Place value in base 2",
+                "body": [
+                  "Exactly like decimal, every position has a weight — but the weights are powers of 2 instead of powers of 10. The rightmost bit (LSB) has weight 2⁰ = 1, the next 2¹ = 2, then 4, 8, 16 and so on. The leftmost bit is the most significant bit (MSB).",
+                  "An n-bit unsigned number can represent values from 0 to 2ⁿ − 1. An 8-bit register therefore holds 0–255."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Bit",
+                "A single binary digit, 0 or 1."
+              ],
+              [
+                "LSB / MSB",
+                "Least / most significant bit — lowest and highest weight positions."
+              ],
+              [
+                "Byte",
+                "A group of 8 bits."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Binary to decimal",
+                "expr": "N = Σ bᵢ · 2ⁱ",
+                "vars": "bᵢ is the bit at position i (counting from 0 at the LSB)."
+              }
+            ],
+            "example": {
+              "problem": "Convert 1011₀₁₀ — i.e. the binary number 1011 0110 — to decimal.",
+              "solution": [
+                "Weights from MSB: 128, 64, 32, 16, 8, 4, 2, 1.",
+                "Bits: 1 0 1 1 0 1 1 0.",
+                "Sum = 128 + 32 + 16 + 4 + 2 = 182."
+              ]
+            },
+            "takeaways": [
+              "Digital systems use two levels because they tolerate noise.",
+              "Binary place values are powers of 2.",
+              "n bits represent 2ⁿ distinct values."
+            ],
+            "check": [
+              {
+                "q": "What is the largest unsigned value in 6 bits?",
+                "options": [
+                  "32",
+                  "63",
+                  "64",
+                  "127"
+                ],
+                "answer": 1,
+                "explanation": "2⁶ − 1 = 63."
+              },
+              {
+                "q": "Binary 1101 equals decimal…",
+                "options": [
+                  "11",
+                  "12",
+                  "13",
+                  "14"
+                ],
+                "answer": 2,
+                "explanation": "8 + 4 + 0 + 1 = 13."
+              }
+            ]
+          },
+          {
+            "id": "number-conversions",
+            "title": "Number-System Conversions",
+            "minutes": 15,
+            "summary": "Decimal ↔ binary ↔ hexadecimal ↔ octal conversion methods.",
+            "sections": [
+              {
+                "heading": "Decimal to binary: repeated division",
+                "body": [
+                  "Divide the decimal number by 2 repeatedly and record each remainder. Reading the remainders from last to first gives the binary number."
+                ]
+              },
+              {
+                "heading": "Hexadecimal and octal shortcuts",
+                "body": [
+                  "Because 16 = 2⁴, every hex digit maps to exactly 4 bits (0–9, A=10 … F=15). Because 8 = 2³, every octal digit maps to 3 bits. Group the binary number from the right and translate each group independently.",
+                  "Engineers write hex with a 0x prefix (0xB6) and binary with 0b (0b10110110) in C and Arduino code."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Radix",
+                "The base of a number system (2, 8, 10, 16)."
+              ],
+              [
+                "Hex digit",
+                "One of 0–9, A–F; represents 4 bits."
+              ]
+            ],
+            "steps": [
+              "Divide by 2, write remainder.",
+              "Repeat with the quotient until it is 0.",
+              "Read remainders bottom-up.",
+              "For hex, group bits in fours from the right."
+            ],
+            "example": {
+              "problem": "Convert decimal 45 to binary and hexadecimal.",
+              "solution": [
+                "45/2=22 r1, 22/2=11 r0, 11/2=5 r1, 5/2=2 r1, 2/2=1 r0, 1/2=0 r1.",
+                "Reading upward: 101101₂.",
+                "Group: 0010 1101 → 2 D → 0x2D."
+              ]
+            },
+            "takeaways": [
+              "Use repeated division for decimal → binary.",
+              "Hex groups 4 bits, octal groups 3 bits.",
+              "Pad with leading zeros when grouping."
+            ],
+            "check": [
+              {
+                "q": "0x3F in decimal is",
+                "options": [
+                  "48",
+                  "63",
+                  "61",
+                  "36"
+                ],
+                "answer": 1,
+                "explanation": "3×16 + 15 = 63."
+              },
+              {
+                "q": "Binary 111 010 in octal is",
+                "options": [
+                  "72",
+                  "27",
+                  "62",
+                  "70"
+                ],
+                "answer": 0,
+                "explanation": "111 = 7, 010 = 2 → 72₈."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "boolean",
+        "title": "Boolean Logic",
+        "lessons": [
+          {
+            "id": "boolean-algebra",
+            "title": "Boolean Algebra",
+            "minutes": 18,
+            "summary": "Laws and theorems used to simplify logic expressions.",
+            "sections": [
+              {
+                "heading": "Operators",
+                "body": [
+                  "Boolean algebra has three basic operations: AND (·), OR (+) and NOT (′ or overbar). Variables take only the values 0 and 1."
+                ]
+              },
+              {
+                "heading": "Key laws",
+                "body": [
+                  "Identity: A + 0 = A, A · 1 = A. Null: A + 1 = 1, A · 0 = 0. Idempotent: A + A = A. Complement: A + A′ = 1, A · A′ = 0.",
+                  "Absorption: A + A·B = A. Distributive: A·(B + C) = A·B + A·C and A + B·C = (A + B)(A + C).",
+                  "De Morgan's theorems: (A · B)′ = A′ + B′ and (A + B)′ = A′ · B′. These let you convert between NAND/NOR forms."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Literal",
+                "A variable or its complement."
+              ],
+              [
+                "SOP",
+                "Sum of products, e.g. AB + A′C."
+              ],
+              [
+                "De Morgan",
+                "Breaking a bar flips the operator."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "De Morgan 1",
+                "expr": "(A · B)′ = A′ + B′"
+              },
+              {
+                "label": "De Morgan 2",
+                "expr": "(A + B)′ = A′ · B′"
+              }
+            ],
+            "example": {
+              "problem": "Simplify Y = A·B + A·B′ + A′·B.",
+              "solution": [
+                "A·B + A·B′ = A·(B + B′) = A.",
+                "Y = A + A′·B.",
+                "Using A + A′B = A + B, Y = A + B."
+              ]
+            },
+            "takeaways": [
+              "Every Boolean expression can be simplified with a small set of laws.",
+              "De Morgan converts AND↔OR with inversion.",
+              "Simpler expressions mean fewer gates."
+            ],
+            "check": [
+              {
+                "q": "A + A·B simplifies to",
+                "options": [
+                  "B",
+                  "A·B",
+                  "A",
+                  "1"
+                ],
+                "answer": 2,
+                "explanation": "Absorption law."
+              },
+              {
+                "q": "(A + B)′ equals",
+                "options": [
+                  "A′ + B′",
+                  "A′ · B′",
+                  "A · B",
+                  "A ⊕ B"
+                ],
+                "answer": 1,
+                "explanation": "De Morgan's second theorem."
+              }
+            ],
+            "simulations": [
+              "logic-gates"
+            ]
+          },
+          {
+            "id": "logic-gates",
+            "title": "Logic Gates",
+            "minutes": 15,
+            "summary": "The seven basic gates, their symbols and behaviour.",
+            "sections": [
+              {
+                "heading": "Basic gates",
+                "body": [
+                  "AND outputs 1 only when all inputs are 1. OR outputs 1 when any input is 1. NOT inverts a single input.",
+                  "NAND and NOR are AND/OR followed by NOT. They are called universal gates because any logic function can be built from NAND alone (or NOR alone).",
+                  "XOR outputs 1 when the inputs differ; XNOR outputs 1 when they are equal. XOR is the heart of binary adders and parity checkers."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Universal gate",
+                "A gate type sufficient to build any logic function (NAND, NOR)."
+              ],
+              [
+                "Parity",
+                "Whether the number of 1s is odd or even."
+              ]
+            ],
+            "diagram": {
+              "kind": "gate",
+              "gate": "XOR",
+              "caption": "XOR gate: Y = A ⊕ B"
+            },
+            "takeaways": [
+              "Learn each gate by its truth table.",
+              "NAND/NOR are universal.",
+              "XOR detects difference."
+            ],
+            "check": [
+              {
+                "q": "Which gate outputs 0 only when both inputs are 1?",
+                "options": [
+                  "NOR",
+                  "NAND",
+                  "XOR",
+                  "AND"
+                ],
+                "answer": 1,
+                "explanation": "NAND = NOT(AND)."
+              },
+              {
+                "q": "XOR with inputs 1,1 gives",
+                "options": [
+                  "0",
+                  "1"
+                ],
+                "answer": 0,
+                "explanation": "Inputs are equal, so XOR = 0."
+              }
+            ],
+            "simulations": [
+              "logic-gates",
+              "circuit-builder"
+            ]
+          },
+          {
+            "id": "truth-tables",
+            "title": "Truth Tables",
+            "minutes": 10,
+            "summary": "Systematically listing every input combination and its output.",
+            "sections": [
+              {
+                "heading": "Building a truth table",
+                "body": [
+                  "With n inputs there are 2ⁿ rows. List inputs in binary counting order (00, 01, 10, 11 …) so that no combination is missed.",
+                  "To evaluate an expression, add intermediate columns for sub-expressions, then compute the final output column."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Minterm",
+                "A product term that is 1 for exactly one row."
+              ],
+              [
+                "Canonical SOP",
+                "OR of the minterms where output = 1."
+              ]
+            ],
+            "example": {
+              "problem": "Build the truth table for Y = A·B′ + C.",
+              "solution": [
+                "8 rows (3 inputs).",
+                "Y = 1 when C = 1 (4 rows) or when A=1,B=0,C=0 (1 more row).",
+                "Y = 1 for minterms 1,3,4,5,7."
+              ]
+            },
+            "takeaways": [
+              "2ⁿ rows for n inputs.",
+              "Use binary counting order.",
+              "Rows with output 1 give the canonical SOP."
+            ],
+            "check": [
+              {
+                "q": "How many rows for a 4-input function?",
+                "options": [
+                  "8",
+                  "12",
+                  "16",
+                  "32"
+                ],
+                "answer": 2,
+                "explanation": "2⁴ = 16."
+              }
+            ],
+            "simulations": [
+              "circuit-builder"
+            ]
+          },
+          {
+            "id": "karnaugh-maps",
+            "title": "Karnaugh Maps",
+            "minutes": 20,
+            "summary": "A visual method for minimizing Boolean functions.",
+            "sections": [
+              {
+                "heading": "Gray-code layout",
+                "body": [
+                  "A K-map arranges the truth table so that adjacent cells differ by exactly one variable (Gray code order 00, 01, 11, 10). Adjacent 1s can therefore be combined, eliminating the variable that changes.",
+                  "Group 1s in rectangles of size 1, 2, 4, 8… Groups may wrap around the edges. Use the largest groups possible and the fewest groups to cover every 1."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Prime implicant",
+                "A group that cannot be made larger."
+              ],
+              [
+                "Don't care (X)",
+                "An input combination whose output doesn't matter; may be used to enlarge groups."
+              ]
+            ],
+            "steps": [
+              "Fill the map from the truth table.",
+              "Circle the largest power-of-two groups of 1s.",
+              "For each group, keep only variables that stay constant.",
+              "OR the resulting product terms."
+            ],
+            "example": {
+              "problem": "Minimize Y(A,B,C) = Σm(1,3,5,7).",
+              "solution": [
+                "All four 1s are where C = 1.",
+                "One group of 4 → Y = C."
+              ]
+            },
+            "takeaways": [
+              "Adjacent cells differ by one bit.",
+              "Bigger groups → simpler terms.",
+              "Edges wrap around."
+            ],
+            "check": [
+              {
+                "q": "A group of 4 cells in a 3-variable K-map eliminates how many variables?",
+                "options": [
+                  "1",
+                  "2",
+                  "3",
+                  "0"
+                ],
+                "answer": 1,
+                "explanation": "4 = 2², so 2 variables are eliminated."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "circuits",
+        "title": "Combinational & Sequential Circuits",
+        "lessons": [
+          {
+            "id": "combinational-circuits",
+            "title": "Combinational Circuits",
+            "minutes": 18,
+            "summary": "Adders, multiplexers and decoders — outputs depend only on present inputs.",
+            "sections": [
+              {
+                "heading": "Half and full adders",
+                "body": [
+                  "A half adder adds two bits: Sum = A ⊕ B, Carry = A · B. A full adder also accepts a carry-in: Sum = A ⊕ B ⊕ Cin, Cout = A·B + Cin·(A ⊕ B).",
+                  "Chaining n full adders gives a ripple-carry adder for n-bit numbers."
+                ]
+              },
+              {
+                "heading": "Multiplexers and decoders",
+                "body": [
+                  "A 2:1 multiplexer selects one of two inputs: Y = S′·I0 + S·I1. A 2-to-4 decoder activates exactly one of four outputs for each 2-bit input code."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Combinational",
+                "Output depends only on current inputs, no memory."
+              ],
+              [
+                "MUX",
+                "Data selector."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Half adder",
+                "expr": "S = A ⊕ B,  C = A · B"
+              },
+              {
+                "label": "2:1 MUX",
+                "expr": "Y = S′·I₀ + S·I₁"
+              }
+            ],
+            "takeaways": [
+              "Adders are built from XOR and AND.",
+              "MUXes route data under control of select lines.",
+              "No feedback loops in combinational logic."
+            ],
+            "check": [
+              {
+                "q": "Half adder carry for A=1, B=1 is",
+                "options": [
+                  "0",
+                  "1"
+                ],
+                "answer": 1,
+                "explanation": "Carry = A·B = 1."
+              }
+            ],
+            "simulations": [
+              "circuit-builder"
+            ]
+          },
+          {
+            "id": "flip-flops",
+            "title": "Flip-Flops and Sequential Logic",
+            "minutes": 18,
+            "summary": "Storing a bit with feedback; SR, D, JK and T flip-flops.",
+            "sections": [
+              {
+                "heading": "Memory through feedback",
+                "body": [
+                  "Cross-coupling two NOR (or NAND) gates forms an SR latch, the simplest memory element. Its output depends on the present inputs and on its previous state.",
+                  "A D flip-flop captures its D input on a clock edge and holds it until the next edge: Q(next) = D. JK flip-flops toggle when J = K = 1; a T flip-flop toggles when T = 1."
+                ]
+              },
+              {
+                "heading": "Registers and counters",
+                "body": [
+                  "Groups of flip-flops sharing a clock form registers. Connecting T flip-flops in series forms a binary counter that divides the clock frequency by 2 at each stage."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Clock edge",
+                "The rising or falling transition that triggers a flip-flop."
+              ],
+              [
+                "State",
+                "The stored value that determines future outputs."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "D flip-flop",
+                "expr": "Q(t+1) = D"
+              },
+              {
+                "label": "JK flip-flop",
+                "expr": "Q(t+1) = J·Q′ + K′·Q"
+              }
+            ],
+            "takeaways": [
+              "Sequential circuits have memory.",
+              "Flip-flops change only on clock edges.",
+              "Counters are chains of toggling flip-flops."
+            ],
+            "check": [
+              {
+                "q": "A T flip-flop with T=1 on every clock edge…",
+                "options": [
+                  "Holds",
+                  "Toggles",
+                  "Resets",
+                  "Sets"
+                ],
+                "answer": 1,
+                "explanation": "T=1 toggles Q each edge."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "analog-electronics",
+    "title": "Analog Electronics Fundamentals",
+    "short": "Ohm's law, diodes, transistors and op-amps.",
+    "overview": "Analog circuits process continuously varying signals. Starting from Ohm's and Kirchhoff's laws, you'll study diodes, BJTs as switches and amplifiers, and the ideal operational amplifier.",
+    "difficulty": "Beginner",
+    "hours": 8,
+    "objectives": [
+      "Apply Ohm's law and Kirchhoff's laws.",
+      "Explain diode rectification.",
+      "Use a BJT as a switch.",
+      "Compute gain of inverting and non-inverting op-amp amplifiers."
+    ],
+    "prerequisites": [],
+    "activities": [
+      {
+        "label": "Component Identification game",
+        "href": "/quizzes/game-components"
+      }
+    ],
+    "quizIds": [
+      "game-components"
+    ],
+    "modules": [
+      {
+        "id": "circuits",
+        "title": "Circuit Laws and Devices",
+        "lessons": [
+          {
+            "id": "ohms-kirchhoff",
+            "title": "Ohm's Law and Kirchhoff's Laws",
+            "minutes": 14,
+            "summary": "V = IR, KCL and KVL.",
+            "sections": [
+              {
+                "heading": "The fundamental laws",
+                "body": [
+                  "Ohm's law: V = I·R. Power dissipated in a resistor is P = V·I = I²R.",
+                  "KCL: the sum of currents entering a node equals the sum leaving. KVL: the sum of voltages around any closed loop is zero.",
+                  "Series resistors add (R = R1 + R2); parallel resistors combine as 1/R = 1/R1 + 1/R2."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Node",
+                "A junction of two or more elements."
+              ],
+              [
+                "Loop",
+                "Any closed path in a circuit."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Ohm's law",
+                "expr": "V = I · R"
+              },
+              {
+                "label": "Voltage divider",
+                "expr": "V_out = V_in · R₂/(R₁ + R₂)"
+              }
+            ],
+            "example": {
+              "problem": "10 V across 1 kΩ and 4 kΩ in series. Voltage across 4 kΩ?",
+              "solution": [
+                "I = 10/5000 = 2 mA.",
+                "V = 2 mA × 4 kΩ = 8 V."
+              ]
+            },
+            "takeaways": [
+              "Ohm's law links V, I and R.",
+              "KCL conserves charge; KVL conserves energy."
+            ],
+            "check": [
+              {
+                "q": "Two 100 Ω resistors in parallel equal",
+                "options": [
+                  "200 Ω",
+                  "100 Ω",
+                  "50 Ω",
+                  "25 Ω"
+                ],
+                "answer": 2,
+                "explanation": "Equal resistors in parallel halve."
+              }
+            ]
+          },
+          {
+            "id": "diodes-transistors",
+            "title": "Diodes and Transistors",
+            "minutes": 16,
+            "summary": "PN junctions, rectifiers and BJT switching.",
+            "sections": [
+              {
+                "heading": "Diodes",
+                "body": [
+                  "A silicon diode conducts when forward-biased above about 0.7 V and blocks reverse current. A bridge of four diodes forms a full-wave rectifier converting AC to pulsating DC."
+                ]
+              },
+              {
+                "heading": "BJT as a switch",
+                "body": [
+                  "A small base current controls a larger collector current: Ic = β·Ib in the active region. Driving the base hard enough saturates the transistor so it acts like a closed switch — ideal for driving relays or motors from an MCU pin."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Forward bias",
+                "Anode more positive than cathode."
+              ],
+              [
+                "Saturation",
+                "BJT fully on, VCE ≈ 0.2 V."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "BJT current gain",
+                "expr": "I_C = β · I_B"
+              }
+            ],
+            "takeaways": [
+              "Diodes conduct one way.",
+              "BJTs amplify current.",
+              "Saturated BJTs make good switches."
+            ],
+            "check": [
+              {
+                "q": "Typical silicon diode forward drop",
+                "options": [
+                  "0.2 V",
+                  "0.7 V",
+                  "1.5 V",
+                  "5 V"
+                ],
+                "answer": 1,
+                "explanation": "≈0.7 V for silicon."
+              }
+            ]
+          },
+          {
+            "id": "op-amps",
+            "title": "Operational Amplifiers",
+            "minutes": 15,
+            "summary": "Ideal op-amp rules and basic amplifier configurations.",
+            "sections": [
+              {
+                "heading": "Golden rules",
+                "body": [
+                  "With negative feedback an ideal op-amp keeps its two inputs at the same voltage and draws no input current.",
+                  "Inverting amplifier gain: −Rf/Rin. Non-inverting gain: 1 + Rf/Rg. A voltage follower (gain 1) buffers high-impedance sensors."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Negative feedback",
+                "Feeding part of the output back to the inverting input."
+              ],
+              [
+                "Buffer",
+                "Unity-gain stage isolating source from load."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Inverting gain",
+                "expr": "A_v = −R_f / R_in"
+              },
+              {
+                "label": "Non-inverting gain",
+                "expr": "A_v = 1 + R_f / R_g"
+              }
+            ],
+            "example": {
+              "problem": "Non-inverting amp with Rf = 9 kΩ, Rg = 1 kΩ.",
+              "solution": [
+                "Gain = 1 + 9 = 10."
+              ]
+            },
+            "takeaways": [
+              "Inputs equal, no input current.",
+              "Resistor ratios set gain."
+            ],
+            "check": [
+              {
+                "q": "Inverting amp with Rf=10k, Rin=2k has gain",
+                "options": [
+                  "5",
+                  "−5",
+                  "6",
+                  "−6"
+                ],
+                "answer": 1,
+                "explanation": "−10/2 = −5."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "communication-systems",
+    "title": "Communication Systems",
+    "short": "Block diagrams, modulation, sampling, quantization and noise.",
+    "overview": "Communication systems move information from a source to a destination through an imperfect channel. You will study the transmitter–channel–receiver model, analog modulation (AM and FM), the digitization of signals and the effect of noise.",
+    "difficulty": "Intermediate",
+    "hours": 10,
+    "objectives": [
+      "Describe each block of a communication system.",
+      "Compute AM modulation index, bandwidth and efficiency.",
+      "Apply Carson's rule to estimate FM bandwidth.",
+      "Choose a sampling rate that satisfies the Nyquist criterion.",
+      "Relate quantization bits to signal-to-quantization-noise ratio."
+    ],
+    "prerequisites": [
+      "Signals and Systems — basic waveforms"
+    ],
+    "activities": [
+      {
+        "label": "Communication Systems Lab",
+        "href": "/lab/communication"
+      },
+      {
+        "label": "Signal Processing Lab",
+        "href": "/lab/signals"
+      },
+      {
+        "label": "Communication Network scenario",
+        "href": "/scenarios/communication-network"
+      }
+    ],
+    "quizIds": [
+      "communication-fundamentals"
+    ],
+    "modules": [
+      {
+        "id": "foundations",
+        "title": "Foundations",
+        "lessons": [
+          {
+            "id": "block-diagram",
+            "title": "Communication-System Block Diagram",
+            "minutes": 12,
+            "summary": "Source, transmitter, channel, receiver and destination.",
+            "diagram": {
+              "kind": "blocks",
+              "blocks": [
+                "Source",
+                "Transmitter",
+                "Channel + noise",
+                "Receiver",
+                "Destination"
+              ],
+              "caption": "Basic communication system"
+            },
+            "sections": [
+              {
+                "heading": "The five blocks",
+                "body": [
+                  "The source produces a message (voice, data). The transmitter converts it into a form suited to the channel — encoding, modulation, amplification. The channel (cable, fibre, free space) carries the signal and adds noise, attenuation and distortion.",
+                  "The receiver reverses the transmitter's operations: filtering, amplification, demodulation and decoding. The destination consumes the recovered message."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Channel",
+                "The physical medium between transmitter and receiver."
+              ],
+              [
+                "Attenuation",
+                "Loss of signal power along the channel."
+              ]
+            ],
+            "takeaways": [
+              "Every link has the same five conceptual blocks.",
+              "Noise enters mainly in the channel and receiver front end."
+            ],
+            "check": [
+              {
+                "q": "Which block performs modulation?",
+                "options": [
+                  "Source",
+                  "Transmitter",
+                  "Channel",
+                  "Destination"
+                ],
+                "answer": 1,
+                "explanation": "The transmitter adapts the message to the channel."
+              }
+            ]
+          },
+          {
+            "id": "analog-digital-signals",
+            "title": "Analog and Digital Signals",
+            "minutes": 10,
+            "summary": "Continuous vs discrete in time and amplitude.",
+            "diagram": {
+              "kind": "wave",
+              "shape": "sine",
+              "caption": "A continuous-time analog sinusoid"
+            },
+            "sections": [
+              {
+                "heading": "Definitions",
+                "body": [
+                  "An analog signal is continuous in both time and amplitude — such as the voltage from a microphone. A digital signal takes a finite set of values at discrete instants.",
+                  "Digital transmission tolerates noise better because the receiver only needs to decide between a few levels, and regenerative repeaters can remove accumulated noise."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Discrete-time",
+                "Defined only at sample instants."
+              ],
+              [
+                "Regeneration",
+                "Re-creating clean digital symbols at a repeater."
+              ]
+            ],
+            "takeaways": [
+              "Analog = continuous; digital = discrete levels.",
+              "Digital links can regenerate signals."
+            ],
+            "check": [
+              {
+                "q": "A thermometer's raw voltage output is typically…",
+                "options": [
+                  "Analog",
+                  "Digital"
+                ],
+                "answer": 0,
+                "explanation": "It varies continuously with temperature."
+              }
+            ],
+            "simulations": [
+              "signals"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "modulation",
+        "title": "Analog Modulation",
+        "lessons": [
+          {
+            "id": "amplitude-modulation",
+            "title": "Amplitude Modulation",
+            "minutes": 18,
+            "summary": "Varying the carrier amplitude with the message.",
+            "diagram": {
+              "kind": "am",
+              "caption": "AM wave with its envelope following the message"
+            },
+            "sections": [
+              {
+                "heading": "The AM equation",
+                "body": [
+                  "In standard AM the carrier amplitude follows the message: s(t) = Ac[1 + m·cos(2πfm t)]·cos(2πfc t). The modulation index m = Am/Ac sets how deeply the envelope swings.",
+                  "For m ≤ 1 the envelope never crosses zero and a simple envelope detector (diode + RC) recovers the message. For m > 1 the wave is over-modulated and the envelope is distorted."
+                ]
+              },
+              {
+                "heading": "Spectrum and power",
+                "body": [
+                  "Tone-modulated AM contains the carrier at fc and two sidebands at fc ± fm, so the bandwidth is 2fm. Most power remains in the carrier: efficiency η = m²/(2 + m²), at most 33.3% when m = 1."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Carrier",
+                "High-frequency sinusoid that carries the message."
+              ],
+              [
+                "Sideband",
+                "Spectral components at fc ± fm."
+              ],
+              [
+                "Envelope",
+                "The curve traced by the wave's peaks."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "AM signal",
+                "expr": "s(t) = Ac[1 + m cos(2πfₘt)] cos(2πf꜀t)"
+              },
+              {
+                "label": "Modulation index",
+                "expr": "m = (Vmax − Vmin)/(Vmax + Vmin)"
+              },
+              {
+                "label": "Efficiency",
+                "expr": "η = m² / (2 + m²)"
+              }
+            ],
+            "example": {
+              "problem": "A 1 MHz carrier is modulated by a 5 kHz tone with m = 0.5. Find bandwidth and efficiency.",
+              "solution": [
+                "B = 2fm = 10 kHz.",
+                "η = 0.25/(2.25) ≈ 11.1%."
+              ]
+            },
+            "takeaways": [
+              "Keep m ≤ 1 to avoid distortion.",
+              "AM bandwidth = 2 × message bandwidth.",
+              "AM is simple but power-inefficient."
+            ],
+            "check": [
+              {
+                "q": "Maximum efficiency of tone-modulated AM is",
+                "options": [
+                  "25%",
+                  "33.3%",
+                  "50%",
+                  "100%"
+                ],
+                "answer": 1,
+                "explanation": "η = 1/3 at m = 1."
+              },
+              {
+                "q": "If m = 1.3, the signal is",
+                "options": [
+                  "Under-modulated",
+                  "Over-modulated",
+                  "Unmodulated"
+                ],
+                "answer": 1,
+                "explanation": "m > 1 is over-modulation."
+              }
+            ],
+            "simulations": [
+              "communication"
+            ]
+          },
+          {
+            "id": "frequency-modulation",
+            "title": "Frequency Modulation",
+            "minutes": 18,
+            "summary": "Varying the carrier frequency with the message.",
+            "sections": [
+              {
+                "heading": "Instantaneous frequency",
+                "body": [
+                  "In FM the carrier's instantaneous frequency is fi(t) = fc + kf·m(t). For a tone message, s(t) = Ac cos(2πfc t + β sin 2πfm t), where β = Δf/fm is the modulation index and Δf the peak deviation.",
+                  "The amplitude stays constant, so FM is robust to amplitude noise and allows efficient non-linear power amplifiers."
+                ]
+              },
+              {
+                "heading": "Bandwidth",
+                "body": [
+                  "Carson's rule estimates the bandwidth containing ~98% of the power: B ≈ 2(Δf + fm). Commercial FM radio uses Δf = 75 kHz and fm up to 15 kHz, giving about 180 kHz (channels are 200 kHz apart)."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Frequency deviation Δf",
+                "Maximum shift from the carrier frequency."
+              ],
+              [
+                "β",
+                "FM modulation index Δf/fm."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Carson's rule",
+                "expr": "B ≈ 2(Δf + fₘ) = 2fₘ(β + 1)"
+              }
+            ],
+            "example": {
+              "problem": "Δf = 50 kHz, fm = 10 kHz. Estimate bandwidth.",
+              "solution": [
+                "β = 5.",
+                "B ≈ 2(50 + 10) = 120 kHz."
+              ]
+            },
+            "takeaways": [
+              "FM trades bandwidth for noise immunity.",
+              "Amplitude is constant in FM.",
+              "Use Carson's rule for bandwidth."
+            ],
+            "check": [
+              {
+                "q": "With β = 2 and fm = 3 kHz, Carson bandwidth is",
+                "options": [
+                  "6 kHz",
+                  "12 kHz",
+                  "18 kHz",
+                  "9 kHz"
+                ],
+                "answer": 2,
+                "explanation": "2·3·(2+1) = 18 kHz."
+              }
+            ],
+            "simulations": [
+              "communication"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "digitization",
+        "title": "Digitization and Noise",
+        "lessons": [
+          {
+            "id": "sampling",
+            "title": "Sampling",
+            "minutes": 15,
+            "summary": "The Nyquist criterion and aliasing.",
+            "diagram": {
+              "kind": "sampling",
+              "caption": "Continuous signal with sampled points"
+            },
+            "sections": [
+              {
+                "heading": "Nyquist–Shannon theorem",
+                "body": [
+                  "A band-limited signal with highest frequency fmax can be perfectly reconstructed from samples taken at fs > 2fmax. The minimum rate 2fmax is the Nyquist rate.",
+                  "If fs is too low, high frequencies 'fold' and appear as lower frequencies — aliasing. A sinusoid of frequency f sampled at fs appears at |f − k·fs| for the nearest integer k.",
+                  "Anti-aliasing low-pass filters before the ADC remove components above fs/2."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Nyquist rate",
+                "2 × highest signal frequency."
+              ],
+              [
+                "Aliasing",
+                "Undersampled frequencies masquerading as lower ones."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Nyquist criterion",
+                "expr": "fₛ > 2fₘₐₓ"
+              },
+              {
+                "label": "Alias",
+                "expr": "fₐ = |f − k·fₛ|"
+              }
+            ],
+            "example": {
+              "problem": "A 7 kHz tone is sampled at 10 kHz. What frequency is observed?",
+              "solution": [
+                "k = round(7/10) = 1.",
+                "fa = |7 − 10| = 3 kHz — aliased."
+              ]
+            },
+            "takeaways": [
+              "Sample faster than twice the highest frequency.",
+              "Aliasing cannot be removed after sampling.",
+              "Filter before you sample."
+            ],
+            "check": [
+              {
+                "q": "Audio up to 20 kHz needs fs of at least",
+                "options": [
+                  "20 kHz",
+                  "40 kHz",
+                  "10 kHz",
+                  "80 kHz"
+                ],
+                "answer": 1,
+                "explanation": "2 × 20 kHz = 40 kHz (CD uses 44.1 kHz)."
+              }
+            ],
+            "simulations": [
+              "signals"
+            ]
+          },
+          {
+            "id": "quantization",
+            "title": "Quantization",
+            "minutes": 12,
+            "summary": "Mapping continuous amplitudes to discrete levels.",
+            "sections": [
+              {
+                "heading": "Levels and step size",
+                "body": [
+                  "An n-bit quantizer has L = 2ⁿ levels. Over a range of 2V the step size is Δ = 2V/(L − 1). Rounding introduces an error of at most ±Δ/2 — quantization noise.",
+                  "For a full-scale sinusoid the signal-to-quantization-noise ratio is approximately SQNR ≈ 6.02n + 1.76 dB: every extra bit buys about 6 dB."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Resolution",
+                "Smallest distinguishable step Δ."
+              ],
+              [
+                "SQNR",
+                "Signal-to-quantization-noise ratio."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "SQNR",
+                "expr": "SQNR ≈ 6.02n + 1.76 dB"
+              }
+            ],
+            "example": {
+              "problem": "SQNR of a 10-bit ADC for a full-scale sine?",
+              "solution": [
+                "6.02 × 10 + 1.76 = 61.96 dB."
+              ]
+            },
+            "takeaways": [
+              "More bits → smaller steps → less noise.",
+              "≈6 dB per bit."
+            ],
+            "check": [
+              {
+                "q": "An 8-bit quantizer has how many levels?",
+                "options": [
+                  "8",
+                  "128",
+                  "255",
+                  "256"
+                ],
+                "answer": 3,
+                "explanation": "2⁸ = 256."
+              }
+            ],
+            "simulations": [
+              "signals"
+            ]
+          },
+          {
+            "id": "noise-snr",
+            "title": "Noise and Signal-to-Noise Ratio",
+            "minutes": 14,
+            "summary": "Thermal noise, SNR in decibels and channel capacity.",
+            "sections": [
+              {
+                "heading": "Sources of noise",
+                "body": [
+                  "Thermal (Johnson) noise arises from random electron motion; its power is N = kTB, so it grows with temperature and bandwidth. Other sources include shot noise, interference and quantization noise.",
+                  "SNR compares signal power to noise power: SNR(dB) = 10 log₁₀(S/N). An SNR of 20 dB means the signal is 100 times stronger than the noise."
+                ]
+              },
+              {
+                "heading": "Shannon capacity",
+                "body": [
+                  "The maximum error-free data rate of a channel is C = B log₂(1 + S/N). Doubling bandwidth doubles capacity; doubling SNR adds only about one bit/s/Hz."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "kTB",
+                "Thermal noise power: Boltzmann constant × temperature × bandwidth."
+              ],
+              [
+                "dB",
+                "Logarithmic ratio, 10 log₁₀ of a power ratio."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "SNR (dB)",
+                "expr": "SNR = 10 log₁₀(S/N)"
+              },
+              {
+                "label": "Shannon capacity",
+                "expr": "C = B log₂(1 + S/N)"
+              }
+            ],
+            "example": {
+              "problem": "B = 3 kHz, SNR = 30 dB. Find C.",
+              "solution": [
+                "S/N = 1000.",
+                "C = 3000 × log₂(1001) ≈ 3000 × 9.97 ≈ 29.9 kbit/s."
+              ]
+            },
+            "takeaways": [
+              "Noise grows with bandwidth.",
+              "Use dB for power ratios.",
+              "Capacity grows linearly with B, logarithmically with SNR."
+            ],
+            "check": [
+              {
+                "q": "S/N = 100 corresponds to",
+                "options": [
+                  "10 dB",
+                  "20 dB",
+                  "100 dB",
+                  "2 dB"
+                ],
+                "answer": 1,
+                "explanation": "10 log₁₀(100) = 20 dB."
+              }
+            ],
+            "simulations": [
+              "communication"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "signals-systems",
+    "title": "Signals and Systems",
+    "short": "Periodic signals, LTI systems, convolution and frequency.",
+    "overview": "Signals carry information; systems transform signals. This course covers periodic waveforms and their parameters, linear time-invariant systems, and the idea of frequency-domain representation.",
+    "difficulty": "Intermediate",
+    "hours": 8,
+    "objectives": [
+      "Describe amplitude, frequency, period and phase.",
+      "Identify linear, time-invariant systems.",
+      "Interpret a signal's spectrum."
+    ],
+    "prerequisites": [
+      "Basic trigonometry"
+    ],
+    "activities": [
+      {
+        "label": "Signal Processing Lab",
+        "href": "/lab/signals"
+      }
+    ],
+    "quizIds": [
+      "signals-dsp"
+    ],
+    "modules": [
+      {
+        "id": "basics",
+        "title": "Signal Fundamentals",
+        "lessons": [
+          {
+            "id": "periodic-signals",
+            "title": "Periodic Signals",
+            "minutes": 14,
+            "summary": "Amplitude, frequency, period and phase of standard waveforms.",
+            "diagram": {
+              "kind": "wave",
+              "shape": "square",
+              "caption": "Square wave — fundamental plus odd harmonics"
+            },
+            "sections": [
+              {
+                "heading": "Parameters",
+                "body": [
+                  "x(t) = A sin(2πft + φ). A is the peak amplitude, f the frequency in Hz, T = 1/f the period, and φ the phase shift in radians or degrees.",
+                  "Square, triangle and sawtooth waves are also periodic. By Fourier's theorem they are sums of sinusoids: a square wave contains only odd harmonics with amplitudes 1, 1/3, 1/5…"
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Period",
+                "Time for one cycle, T = 1/f."
+              ],
+              [
+                "Harmonic",
+                "Integer multiple of the fundamental frequency."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Sinusoid",
+                "expr": "x(t) = A sin(2πft + φ)"
+              },
+              {
+                "label": "Period",
+                "expr": "T = 1/f"
+              }
+            ],
+            "takeaways": [
+              "Four parameters describe a sinusoid.",
+              "Non-sinusoidal periodic signals contain harmonics."
+            ],
+            "check": [
+              {
+                "q": "Period of a 50 Hz signal",
+                "options": [
+                  "5 ms",
+                  "20 ms",
+                  "50 ms",
+                  "2 ms"
+                ],
+                "answer": 1,
+                "explanation": "1/50 = 0.02 s."
+              }
+            ],
+            "simulations": [
+              "signals"
+            ]
+          },
+          {
+            "id": "lti-systems",
+            "title": "LTI Systems and Convolution",
+            "minutes": 16,
+            "summary": "Linearity, time-invariance and impulse response.",
+            "sections": [
+              {
+                "heading": "Properties",
+                "body": [
+                  "A system is linear if scaling and adding inputs scales and adds outputs (superposition). It is time-invariant if delaying the input simply delays the output.",
+                  "An LTI system is completely described by its impulse response h(t); the output is the convolution y(t) = x(t) * h(t)."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Impulse response",
+                "Output when the input is a unit impulse."
+              ],
+              [
+                "Convolution",
+                "Weighted sum of shifted impulse responses."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Discrete convolution",
+                "expr": "y[n] = Σ x[k] · h[n − k]"
+              }
+            ],
+            "example": {
+              "problem": "x = [1, 2], h = [1, 1]. Find y.",
+              "solution": [
+                "y[0] = 1, y[1] = 1 + 2 = 3, y[2] = 2.",
+                "y = [1, 3, 2]."
+              ]
+            },
+            "takeaways": [
+              "Superposition defines linearity.",
+              "h(t) characterizes an LTI system."
+            ],
+            "check": [
+              {
+                "q": "y(t) = 2x(t) + 3 is",
+                "options": [
+                  "Linear",
+                  "Not linear"
+                ],
+                "answer": 1,
+                "explanation": "The constant offset violates superposition."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsp",
+    "title": "Digital Signal Processing",
+    "short": "Discrete signals, DFT and digital filters.",
+    "overview": "DSP manipulates sampled signals with arithmetic. You'll learn how the DFT reveals frequency content and how FIR moving-average filters smooth noisy data.",
+    "difficulty": "Advanced",
+    "hours": 7,
+    "objectives": [
+      "Explain the DFT bin spacing.",
+      "Design a moving-average FIR filter.",
+      "Relate sampling rate to digital frequency."
+    ],
+    "prerequisites": [
+      "Signals and Systems",
+      "Sampling"
+    ],
+    "activities": [
+      {
+        "label": "Signal Processing Lab",
+        "href": "/lab/signals"
+      },
+      {
+        "label": "Moving average challenge",
+        "href": "/coding/moving-average"
+      }
+    ],
+    "quizIds": [
+      "signals-dsp"
+    ],
+    "modules": [
+      {
+        "id": "core",
+        "title": "Core DSP",
+        "lessons": [
+          {
+            "id": "dft",
+            "title": "The Discrete Fourier Transform",
+            "minutes": 16,
+            "summary": "From N samples to N frequency bins.",
+            "sections": [
+              {
+                "heading": "Frequency bins",
+                "body": [
+                  "The DFT converts N time samples into N complex frequency coefficients X[k] = Σ x[n] e^(−j2πkn/N). Bin k corresponds to frequency k·fs/N, so resolution Δf = fs/N.",
+                  "The FFT computes the same result in O(N log N) operations instead of O(N²)."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Bin",
+                "One DFT output frequency."
+              ],
+              [
+                "FFT",
+                "Fast algorithm for the DFT."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "DFT",
+                "expr": "X[k] = Σₙ x[n] e^(−j2πkn/N)"
+              },
+              {
+                "label": "Resolution",
+                "expr": "Δf = fₛ / N"
+              }
+            ],
+            "example": {
+              "problem": "fs = 8 kHz, N = 256. Resolution?",
+              "solution": [
+                "Δf = 8000/256 = 31.25 Hz."
+              ]
+            },
+            "takeaways": [
+              "More samples → finer resolution.",
+              "FFT makes spectral analysis practical."
+            ],
+            "check": [
+              {
+                "q": "Doubling N with fixed fs makes Δf",
+                "options": [
+                  "Double",
+                  "Half",
+                  "Unchanged"
+                ],
+                "answer": 1,
+                "explanation": "Δf = fs/N."
+              }
+            ]
+          },
+          {
+            "id": "fir-filters",
+            "title": "FIR Filters and Moving Average",
+            "minutes": 14,
+            "summary": "Smoothing noisy sensor data.",
+            "sections": [
+              {
+                "heading": "Moving average",
+                "body": [
+                  "A length-M moving average outputs the mean of the last M samples: y[n] = (1/M) Σ x[n − k]. It is a simple low-pass FIR filter that reduces random noise by about √M.",
+                  "Larger M smooths more but responds more slowly (delay of (M − 1)/2 samples)."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "FIR",
+                "Finite impulse response filter — no feedback."
+              ],
+              [
+                "Low-pass",
+                "Passes slow variations, attenuates fast ones."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Moving average",
+                "expr": "y[n] = (1/M) Σₖ₌₀^{M−1} x[n − k]"
+              }
+            ],
+            "takeaways": [
+              "Averaging reduces noise.",
+              "Trade-off: smoothness vs delay."
+            ],
+            "check": [
+              {
+                "q": "A 4-point average of 2, 4, 6, 8 is",
+                "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "20"
+                ],
+                "answer": 1,
+                "explanation": "20/4 = 5."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sensors-instrumentation",
+    "title": "Sensors and Instrumentation",
+    "short": "Transducers, accuracy, calibration and signal conditioning.",
+    "overview": "Instrumentation turns physical quantities into trustworthy numbers. Learn sensor characteristics, error types, and the signal conditioning chain.",
+    "difficulty": "Beginner",
+    "hours": 6,
+    "objectives": [
+      "Distinguish accuracy, precision and resolution.",
+      "Describe a measurement chain.",
+      "Select a sensor for a quantity."
+    ],
+    "prerequisites": [],
+    "activities": [
+      {
+        "label": "Sensor & IoT Lab",
+        "href": "/lab/sensors"
+      },
+      {
+        "label": "Environmental Monitoring scenario",
+        "href": "/scenarios/environment-monitoring"
+      }
+    ],
+    "quizIds": [
+      "embedded-iot"
+    ],
+    "modules": [
+      {
+        "id": "measurement",
+        "title": "Measurement",
+        "lessons": [
+          {
+            "id": "sensor-characteristics",
+            "title": "Sensor Characteristics",
+            "minutes": 13,
+            "summary": "Accuracy, precision, resolution, range and sensitivity.",
+            "sections": [
+              {
+                "heading": "Static characteristics",
+                "body": [
+                  "Accuracy is closeness to the true value; precision is repeatability. A sensor can be precise but inaccurate if it has a constant offset — fixed by calibration.",
+                  "Sensitivity is output change per input change (LM35: 10 mV/°C). Resolution is the smallest detectable change. Range is the span of valid inputs."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Offset error",
+                "Constant deviation from the true value."
+              ],
+              [
+                "Calibration",
+                "Comparing against a reference and correcting."
+              ]
+            ],
+            "takeaways": [
+              "Precision ≠ accuracy.",
+              "Calibrate to remove systematic error."
+            ],
+            "check": [
+              {
+                "q": "Repeated readings 25.1, 25.1, 25.2 °C when true is 27 °C are",
+                "options": [
+                  "Accurate & precise",
+                  "Precise, not accurate",
+                  "Accurate, not precise"
+                ],
+                "answer": 1,
+                "explanation": "Tightly grouped but offset."
+              }
+            ],
+            "simulations": [
+              "sensors"
+            ]
+          },
+          {
+            "id": "signal-conditioning",
+            "title": "Signal Conditioning",
+            "minutes": 12,
+            "summary": "Amplification, filtering and ADC conversion.",
+            "diagram": {
+              "kind": "blocks",
+              "blocks": [
+                "Transducer",
+                "Amplifier",
+                "Filter",
+                "ADC",
+                "Processor"
+              ],
+              "caption": "Measurement chain"
+            },
+            "sections": [
+              {
+                "heading": "The chain",
+                "body": [
+                  "Raw sensor signals are often tiny (millivolts) and noisy. An amplifier scales them to the ADC range, a low-pass filter removes noise and prevents aliasing, and the ADC digitizes the result."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Transducer",
+                "Converts one form of energy to another."
+              ]
+            ],
+            "takeaways": [
+              "Match the signal to the ADC range.",
+              "Filter before sampling."
+            ],
+            "check": [
+              {
+                "q": "Which block prevents aliasing?",
+                "options": [
+                  "Amplifier",
+                  "Low-pass filter",
+                  "Processor"
+                ],
+                "answer": 1,
+                "explanation": "Anti-alias filter limits bandwidth."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "embedded-systems",
+    "title": "Microcontrollers and Embedded Systems",
+    "short": "GPIO, sensors, actuators, serial links and Arduino-style code.",
+    "overview": "An embedded system is a computer dedicated to one job inside a larger product. This course introduces microcontroller architecture, digital I/O, sensor interfacing, actuator control and serial communication using Arduino-style C.",
+    "difficulty": "Beginner",
+    "hours": 10,
+    "objectives": [
+      "Identify the main blocks of a microcontroller.",
+      "Configure pins as inputs or outputs and read/write them.",
+      "Convert ADC readings into physical units.",
+      "Drive LEDs, buzzers and motors safely with PWM and transistors.",
+      "Structure an Arduino sketch with setup() and loop()."
+    ],
+    "prerequisites": [
+      "Digital Electronics — binary and logic gates"
+    ],
+    "activities": [
+      {
+        "label": "Sensor & IoT Lab",
+        "href": "/lab/sensors"
+      },
+      {
+        "label": "Arduino-style coding challenges",
+        "href": "/coding"
+      },
+      {
+        "label": "Smart Home scenario",
+        "href": "/scenarios/smart-home"
+      }
+    ],
+    "quizIds": [
+      "embedded-iot"
+    ],
+    "modules": [
+      {
+        "id": "mcu",
+        "title": "Microcontroller Basics",
+        "lessons": [
+          {
+            "id": "microcontroller-fundamentals",
+            "title": "Microcontroller Fundamentals",
+            "minutes": 14,
+            "summary": "CPU, memory and peripherals on one chip.",
+            "diagram": {
+              "kind": "blocks",
+              "blocks": [
+                "Sensors",
+                "ADC / GPIO",
+                "CPU + Flash + RAM",
+                "GPIO / PWM",
+                "Actuators"
+              ],
+              "caption": "Data flow in an embedded controller"
+            },
+            "sections": [
+              {
+                "heading": "What is on the chip",
+                "body": [
+                  "A microcontroller (MCU) integrates a CPU core, Flash memory for the program, SRAM for variables, and peripherals: GPIO pins, timers, an ADC, and serial interfaces such as UART, SPI and I²C.",
+                  "The ATmega328P used on the Arduino Uno runs at 16 MHz with 32 KB Flash, 2 KB SRAM, 14 digital pins (6 with PWM) and a 6-channel 10-bit ADC."
+                ]
+              },
+              {
+                "heading": "Program structure",
+                "body": [
+                  "Arduino sketches have setup(), run once after reset to configure pins, and loop(), which runs forever. Embedded programs typically never exit."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "GPIO",
+                "General-purpose input/output pin."
+              ],
+              [
+                "Flash",
+                "Non-volatile program memory."
+              ],
+              [
+                "Peripheral",
+                "On-chip hardware block such as a timer or ADC."
+              ]
+            ],
+            "takeaways": [
+              "MCUs combine CPU, memory and I/O.",
+              "setup() configures, loop() repeats.",
+              "Resources are small — write efficient code."
+            ],
+            "check": [
+              {
+                "q": "Which memory keeps the program after power-off?",
+                "options": [
+                  "SRAM",
+                  "Flash",
+                  "Registers"
+                ],
+                "answer": 1,
+                "explanation": "Flash is non-volatile."
+              }
+            ]
+          },
+          {
+            "id": "digital-io",
+            "title": "Digital Input and Output",
+            "minutes": 14,
+            "summary": "pinMode, digitalRead, digitalWrite and pull-up resistors.",
+            "sections": [
+              {
+                "heading": "Outputs",
+                "body": [
+                  "pinMode(13, OUTPUT) then digitalWrite(13, HIGH) drives the pin to 5 V. A series resistor limits LED current: R = (Vcc − Vf)/I, e.g. (5 − 2)/0.015 ≈ 200 Ω."
+                ]
+              },
+              {
+                "heading": "Inputs and pull-ups",
+                "body": [
+                  "A floating input reads random values. A pull-up resistor (or INPUT_PULLUP) holds the pin HIGH; pressing a button to ground makes it read LOW — so the logic is inverted.",
+                  "Mechanical buttons bounce for a few milliseconds; debounce in software by requiring a stable reading for ~20 ms."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Pull-up",
+                "Resistor to Vcc that defines an idle HIGH level."
+              ],
+              [
+                "Debounce",
+                "Filtering contact bounce."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "LED resistor",
+                "expr": "R = (V꜀꜀ − V_f) / I_f"
+              }
+            ],
+            "example": {
+              "problem": "Choose a resistor for a red LED (Vf = 2 V, 10 mA) on 5 V.",
+              "solution": [
+                "R = (5 − 2)/0.01 = 300 Ω.",
+                "Use the next standard value, 330 Ω."
+              ]
+            },
+            "takeaways": [
+              "Always limit LED current.",
+              "Never leave inputs floating.",
+              "With pull-ups, pressed = LOW."
+            ],
+            "check": [
+              {
+                "q": "With INPUT_PULLUP, an unpressed button reads",
+                "options": [
+                  "HIGH",
+                  "LOW"
+                ],
+                "answer": 0,
+                "explanation": "The pull-up holds the pin HIGH."
+              }
+            ],
+            "simulations": [
+              "sensors"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "interfacing",
+        "title": "Interfacing",
+        "lessons": [
+          {
+            "id": "sensor-interfaces",
+            "title": "Sensor Interfaces",
+            "minutes": 16,
+            "summary": "Reading analog sensors with the ADC and converting to units.",
+            "sections": [
+              {
+                "heading": "ADC conversion",
+                "body": [
+                  "A 10-bit ADC maps 0–Vref to 0–1023. Voltage = reading × Vref / 1023. The LM35 temperature sensor outputs 10 mV/°C, so T(°C) = Voltage × 100.",
+                  "An LDR in a voltage divider gives a voltage that rises or falls with light. An HC-SR04 ultrasonic sensor reports distance through echo time: d = t × 343 m/s ÷ 2."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "ADC",
+                "Analog-to-digital converter."
+              ],
+              [
+                "Voltage divider",
+                "Two resistors producing a fraction of the input voltage."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "ADC to voltage",
+                "expr": "V = ADC × V_ref / (2ⁿ − 1)"
+              },
+              {
+                "label": "Ultrasonic distance",
+                "expr": "d = (t × 0.0343 cm/µs) / 2"
+              }
+            ],
+            "example": {
+              "problem": "LM35 reading = 62 on a 5 V, 10-bit ADC.",
+              "solution": [
+                "V = 62 × 5/1023 ≈ 0.303 V.",
+                "T ≈ 30.3 °C."
+              ]
+            },
+            "takeaways": [
+              "Know your ADC resolution and reference.",
+              "Each sensor has a transfer function to physical units."
+            ],
+            "check": [
+              {
+                "q": "Echo time of 580 µs gives distance ≈",
+                "options": [
+                  "5 cm",
+                  "10 cm",
+                  "20 cm",
+                  "58 cm"
+                ],
+                "answer": 1,
+                "explanation": "580 × 0.0343 / 2 ≈ 9.9 cm."
+              }
+            ],
+            "simulations": [
+              "sensors"
+            ]
+          },
+          {
+            "id": "actuator-control",
+            "title": "Actuator Control",
+            "minutes": 14,
+            "summary": "PWM, transistors and relays for LEDs, motors and buzzers.",
+            "sections": [
+              {
+                "heading": "PWM",
+                "body": [
+                  "Pulse-width modulation rapidly switches a pin on and off. The average voltage equals duty cycle × Vcc. analogWrite(pin, 128) gives roughly 50% duty on an 8-bit PWM channel.",
+                  "MCU pins can source only ~20 mA. Motors and relays need a transistor or MOSFET driver and a flyback diode to absorb inductive spikes."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Duty cycle",
+                "Fraction of the period the signal is HIGH."
+              ],
+              [
+                "Flyback diode",
+                "Protects drivers from inductive voltage spikes."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Average voltage",
+                "expr": "V_avg = D × V꜀꜀"
+              }
+            ],
+            "takeaways": [
+              "PWM controls average power.",
+              "Use drivers for loads above ~20 mA.",
+              "Protect against inductive kickback."
+            ],
+            "check": [
+              {
+                "q": "analogWrite(pin, 64) on 5 V gives average ≈",
+                "options": [
+                  "0.6 V",
+                  "1.25 V",
+                  "2.5 V",
+                  "3.2 V"
+                ],
+                "answer": 1,
+                "explanation": "64/255 × 5 ≈ 1.25 V."
+              }
+            ],
+            "simulations": [
+              "sensors"
+            ]
+          },
+          {
+            "id": "serial-communication",
+            "title": "Serial Communication",
+            "minutes": 12,
+            "summary": "UART, I²C and SPI at a glance.",
+            "sections": [
+              {
+                "heading": "Three common buses",
+                "body": [
+                  "UART sends bytes asynchronously on TX/RX lines at an agreed baud rate (e.g. 9600 bit/s); each frame has a start bit, 8 data bits and a stop bit.",
+                  "I²C uses two shared wires (SDA, SCL) and 7-bit addresses so many sensors share one bus. SPI uses four wires (MOSI, MISO, SCK, CS) and is faster but needs one chip-select per device."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Baud rate",
+                "Symbols per second on a serial line."
+              ],
+              [
+                "Chip select",
+                "SPI line that enables one device."
+              ]
+            ],
+            "example": {
+              "problem": "How long does one byte take at 9600 baud with 8N1 framing?",
+              "solution": [
+                "10 bits per frame.",
+                "10/9600 ≈ 1.04 ms."
+              ]
+            },
+            "takeaways": [
+              "UART: simple point-to-point.",
+              "I²C: many devices, 2 wires.",
+              "SPI: fast, more wires."
+            ],
+            "check": [
+              {
+                "q": "Which bus uses device addresses on two wires?",
+                "options": [
+                  "UART",
+                  "SPI",
+                  "I²C"
+                ],
+                "answer": 2,
+                "explanation": "I²C addresses devices on SDA/SCL."
+              }
+            ]
+          },
+          {
+            "id": "arduino-programming",
+            "title": "Basic Arduino-Style Programming",
+            "minutes": 16,
+            "summary": "Variables, conditionals and loops in sketches.",
+            "sections": [
+              {
+                "heading": "Control flow",
+                "body": [
+                  "Embedded logic is mostly read → decide → act. For example: int t = readTemp(); if (t > 30) digitalWrite(FAN, HIGH); else digitalWrite(FAN, LOW);",
+                  "Adding hysteresis (turn on above 30 °C, off below 28 °C) prevents rapid toggling when the reading hovers near the threshold.",
+                  "Avoid long delay() calls in loop(); use millis() timing so the controller stays responsive."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Hysteresis",
+                "Different on/off thresholds to avoid chatter."
+              ],
+              [
+                "millis()",
+                "Milliseconds since reset — used for non-blocking timing."
+              ]
+            ],
+            "takeaways": [
+              "Read, decide, act.",
+              "Use hysteresis for thresholds.",
+              "Prefer non-blocking timing."
+            ],
+            "check": [
+              {
+                "q": "Hysteresis prevents…",
+                "options": [
+                  "Overflow",
+                  "Rapid on/off toggling",
+                  "Floating inputs"
+                ],
+                "answer": 1,
+                "explanation": "Separate thresholds stop chatter near the setpoint."
+              }
+            ],
+            "simulations": [
+              "sensors"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "iot",
+    "title": "Internet of Things",
+    "short": "Connected sensing, MQTT and edge decisions.",
+    "overview": "IoT links sensing devices to networks and cloud services. Learn the layered IoT architecture, lightweight protocols such as MQTT, and how to decide what to process at the edge.",
+    "difficulty": "Intermediate",
+    "hours": 6,
+    "objectives": [
+      "Describe the IoT layers.",
+      "Explain publish/subscribe messaging.",
+      "Design threshold-based automation."
+    ],
+    "prerequisites": [
+      "Embedded Systems basics"
+    ],
+    "activities": [
+      {
+        "label": "Smart Home scenario",
+        "href": "/scenarios/smart-home"
+      },
+      {
+        "label": "Environmental Monitoring",
+        "href": "/scenarios/environment-monitoring"
+      }
+    ],
+    "quizIds": [
+      "embedded-iot"
+    ],
+    "modules": [
+      {
+        "id": "arch",
+        "title": "Architecture",
+        "lessons": [
+          {
+            "id": "iot-architecture",
+            "title": "IoT Architecture",
+            "minutes": 12,
+            "summary": "Perception, network, processing and application layers.",
+            "diagram": {
+              "kind": "blocks",
+              "blocks": [
+                "Sensors (perception)",
+                "Gateway / network",
+                "Cloud processing",
+                "Application / dashboard"
+              ],
+              "caption": "Four-layer IoT model"
+            },
+            "sections": [
+              {
+                "heading": "Layers",
+                "body": [
+                  "The perception layer senses and actuates. The network layer (Wi-Fi, BLE, LoRa, cellular) moves data. Processing aggregates and analyses it; the application layer presents dashboards and alerts.",
+                  "Edge computing processes data near the device to reduce latency and bandwidth — e.g. turning on a fan locally instead of waiting for the cloud."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Gateway",
+                "Bridges local devices to the internet."
+              ],
+              [
+                "Edge computing",
+                "Processing close to the data source."
+              ]
+            ],
+            "takeaways": [
+              "Four layers from sensor to app.",
+              "Process locally when latency matters."
+            ],
+            "check": [
+              {
+                "q": "LoRa is mainly used for",
+                "options": [
+                  "High bandwidth video",
+                  "Long-range low-power telemetry",
+                  "Wired Ethernet"
+                ],
+                "answer": 1,
+                "explanation": "LoRa trades data rate for range and power."
+              }
+            ],
+            "simulations": [
+              "sensors"
+            ]
+          },
+          {
+            "id": "mqtt",
+            "title": "MQTT and Publish/Subscribe",
+            "minutes": 11,
+            "summary": "Lightweight messaging for constrained devices.",
+            "sections": [
+              {
+                "heading": "How MQTT works",
+                "body": [
+                  "Clients publish messages to topics such as home/livingroom/temperature on a broker. Other clients subscribe to topics and receive matching messages; publishers and subscribers never talk directly.",
+                  "QoS 0 delivers at most once, QoS 1 at least once, QoS 2 exactly once."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Broker",
+                "Server that routes MQTT messages."
+              ],
+              [
+                "Topic",
+                "Hierarchical message address."
+              ]
+            ],
+            "takeaways": [
+              "Pub/sub decouples devices.",
+              "Choose QoS for reliability needs."
+            ],
+            "check": [
+              {
+                "q": "Which MQTT QoS guarantees exactly-once delivery?",
+                "options": [
+                  "0",
+                  "1",
+                  "2"
+                ],
+                "answer": 2,
+                "explanation": "QoS 2 uses a four-step handshake."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "wireless",
+    "title": "Wireless Communication Fundamentals",
+    "short": "Propagation, path loss, antennas and multiple access.",
+    "overview": "Wireless links send energy through free space. This course covers wavelength, free-space path loss, link budgets, and how many users share the spectrum.",
+    "difficulty": "Intermediate",
+    "hours": 6,
+    "objectives": [
+      "Compute wavelength and free-space path loss.",
+      "Build a simple link budget.",
+      "Compare FDMA, TDMA and CDMA."
+    ],
+    "prerequisites": [
+      "Communication Systems"
+    ],
+    "activities": [
+      {
+        "label": "Communication Network scenario",
+        "href": "/scenarios/communication-network"
+      }
+    ],
+    "quizIds": [
+      "communication-fundamentals"
+    ],
+    "modules": [
+      {
+        "id": "prop",
+        "title": "Propagation",
+        "lessons": [
+          {
+            "id": "path-loss",
+            "title": "Wavelength and Path Loss",
+            "minutes": 14,
+            "summary": "Why signals weaken with distance and frequency.",
+            "sections": [
+              {
+                "heading": "Free-space path loss",
+                "body": [
+                  "Wavelength λ = c/f; at 2.4 GHz λ ≈ 12.5 cm. Free-space path loss FSPL(dB) = 20 log₁₀(d) + 20 log₁₀(f) − 147.55 (d in metres, f in Hz).",
+                  "Doubling distance adds 6 dB of loss. A link budget sums transmit power and antenna gains, then subtracts losses to predict received power."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Link budget",
+                "Accounting of gains and losses along a link."
+              ],
+              [
+                "dBm",
+                "Power relative to 1 mW."
+              ]
+            ],
+            "equations": [
+              {
+                "label": "Wavelength",
+                "expr": "λ = c / f"
+              },
+              {
+                "label": "FSPL",
+                "expr": "FSPL = 20log₁₀(d) + 20log₁₀(f) − 147.55 dB"
+              }
+            ],
+            "example": {
+              "problem": "Pr for Pt = 20 dBm, Gt = Gr = 2 dBi, FSPL = 80 dB?",
+              "solution": [
+                "Pr = 20 + 2 + 2 − 80 = −56 dBm."
+              ]
+            },
+            "takeaways": [
+              "Loss grows with distance and frequency.",
+              "Link budgets predict received power."
+            ],
+            "check": [
+              {
+                "q": "Doubling distance increases FSPL by",
+                "options": [
+                  "3 dB",
+                  "6 dB",
+                  "10 dB",
+                  "20 dB"
+                ],
+                "answer": 1,
+                "explanation": "20 log₁₀(2) ≈ 6 dB."
+              }
+            ],
+            "simulations": [
+              "communication"
+            ]
+          },
+          {
+            "id": "multiple-access",
+            "title": "Multiple Access",
+            "minutes": 10,
+            "summary": "FDMA, TDMA, CDMA and OFDMA.",
+            "sections": [
+              {
+                "heading": "Sharing the spectrum",
+                "body": [
+                  "FDMA gives each user a separate frequency band; TDMA gives each user time slots on a shared band; CDMA spreads each user over the band with a unique code. OFDMA, used in 4G/5G and Wi-Fi 6, allocates groups of orthogonal subcarriers to users."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Subcarrier",
+                "Narrow orthogonal tone in OFDM."
+              ]
+            ],
+            "takeaways": [
+              "Users share by frequency, time, code, or subcarriers."
+            ],
+            "check": [
+              {
+                "q": "4G LTE downlink uses",
+                "options": [
+                  "FDMA",
+                  "TDMA",
+                  "OFDMA",
+                  "CDMA"
+                ],
+                "answer": 2,
+                "explanation": "LTE uses OFDMA."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ai-ml-entc",
+    "title": "Introduction to AI and Machine Learning for ENTC",
+    "short": "Learning from data, classification and TinyML.",
+    "overview": "Machine learning finds patterns in data. Learn supervised learning, features from signals, evaluation metrics and how small models run on microcontrollers (TinyML).",
+    "difficulty": "Intermediate",
+    "hours": 6,
+    "objectives": [
+      "Explain supervised learning.",
+      "Extract features from sensor signals.",
+      "Evaluate a classifier with accuracy and confusion matrix."
+    ],
+    "prerequisites": [
+      "Signals and Systems basics"
+    ],
+    "activities": [
+      {
+        "label": "AI Learning Assistant",
+        "href": "/ai-assistant"
+      }
+    ],
+    "quizIds": [],
+    "modules": [
+      {
+        "id": "ml",
+        "title": "Machine Learning Basics",
+        "lessons": [
+          {
+            "id": "supervised-learning",
+            "title": "Supervised Learning",
+            "minutes": 14,
+            "summary": "Learning a mapping from labelled examples.",
+            "sections": [
+              {
+                "heading": "Training and testing",
+                "body": [
+                  "Supervised learning fits a model to examples (x, y). Regression predicts numbers; classification predicts categories — e.g. classifying vibration signals as 'normal' or 'faulty' motor.",
+                  "Split data into training and test sets. A model that does well on training but poorly on test data is overfitting."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Feature",
+                "A measurable input property, e.g. RMS of a signal."
+              ],
+              [
+                "Overfitting",
+                "Memorizing training data instead of generalizing."
+              ]
+            ],
+            "takeaways": [
+              "Labels guide learning.",
+              "Always evaluate on unseen data."
+            ],
+            "check": [
+              {
+                "q": "Predicting temperature tomorrow is",
+                "options": [
+                  "Classification",
+                  "Regression"
+                ],
+                "answer": 1,
+                "explanation": "The output is a continuous number."
+              }
+            ]
+          },
+          {
+            "id": "tinyml",
+            "title": "Features and TinyML",
+            "minutes": 12,
+            "summary": "Running models on microcontrollers.",
+            "sections": [
+              {
+                "heading": "From signals to features",
+                "body": [
+                  "Raw waveforms are compressed into features: mean, RMS, peak, zero-crossing rate, FFT band energies. Simple classifiers work well on good features.",
+                  "TinyML quantizes models to 8-bit integers so they fit in a few hundred KB of Flash and run on MCUs, enabling keyword spotting or gesture recognition offline."
+                ]
+              }
+            ],
+            "terms": [
+              [
+                "Quantization (ML)",
+                "Reducing weight precision to shrink models."
+              ],
+              [
+                "Inference",
+                "Running a trained model on new data."
+              ]
+            ],
+            "takeaways": [
+              "Good features simplify models.",
+              "TinyML brings inference to the edge."
+            ],
+            "check": [
+              {
+                "q": "RMS of a signal is a",
+                "options": [
+                  "Label",
+                  "Feature",
+                  "Loss"
+                ],
+                "answer": 1,
+                "explanation": "It's a computed input property."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

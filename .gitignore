@@ -30,3 +30,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment (secrets) — never commit real .env files
+.env
+backend/.env
+backend/.session_secret
+
+# Python backend
+backend/.venv/
+backend/__pycache__/
+**/__pycache__/
+backend/.pytest_cache/
+backend/smoke.log

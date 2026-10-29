@@ -1,0 +1,20 @@
+[
+  {
+    "id": "game-circuit-puzzle",
+    "title": "Circuit Logic Puzzle",
+    "kind": "circuit-puzzle",
+    "description": "Find the input combination that lights the output LED in multi-gate circuits."
+  },
+  {
+    "id": "game-components",
+    "title": "Component Identification",
+    "kind": "components",
+    "description": "Identify electronic components from their schematic symbol and function."
+  },
+  {
+    "id": "game-rapid-logic",
+    "title": "Rapid Logic Challenge",
+    "kind": "rapid-logic",
+    "description": "Evaluate as many Boolean expressions as you can before the timer runs out."
+  }
+]

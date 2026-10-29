@@ -1,0 +1,698 @@
+[
+  {
+    "id": "xor-gate",
+    "title": "Build XOR from basic operators",
+    "category": "Boolean logic",
+    "difficulty": "Beginner",
+    "points": 10,
+    "objective": "Express a logic gate using AND, OR and NOT.",
+    "statement": "Return the XOR of inputs a and b using only &&, || and ! (do not use ^ or !=).",
+    "inputSpec": "a, b ∈ {0, 1}",
+    "outputSpec": "return 1 if exactly one input is 1, else 0",
+    "examples": [
+      {
+        "input": "a=1, b=0",
+        "output": "1"
+      },
+      {
+        "input": "a=1, b=1",
+        "output": "0"
+      }
+    ],
+    "constraints": [
+      "Use only &&, || and !"
+    ],
+    "starter": "// a and b are provided (0 or 1)\nint y = 0;\n// your logic here\n\nreturn y;",
+    "tests": [
+      {
+        "name": "a=0, b=0",
+        "inputs": {
+          "a": 0,
+          "b": 0
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "a=0, b=1",
+        "inputs": {
+          "a": 0,
+          "b": 1
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "a=1, b=0",
+        "inputs": {
+          "a": 1,
+          "b": 0
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "a=1, b=1",
+        "inputs": {
+          "a": 1,
+          "b": 1
+        },
+        "expectReturn": 0
+      }
+    ],
+    "hint": "XOR = (a AND NOT b) OR (NOT a AND b)."
+  },
+  {
+    "id": "binary-to-decimal",
+    "title": "Binary digits to decimal",
+    "category": "Number-system conversion",
+    "difficulty": "Beginner",
+    "points": 15,
+    "objective": "Apply place-value weights.",
+    "statement": "Four bits b3 b2 b1 b0 (b3 is the MSB) are provided. Return their decimal value.",
+    "inputSpec": "b3, b2, b1, b0 ∈ {0, 1}",
+    "outputSpec": "decimal value 0–15",
+    "examples": [
+      {
+        "input": "b3=1 b2=0 b1=1 b0=1",
+        "output": "11"
+      }
+    ],
+    "constraints": [
+      "Do not hard-code answers."
+    ],
+    "starter": "int value = 0;\n// combine the bits using powers of two\n\nreturn value;",
+    "tests": [
+      {
+        "name": "0000",
+        "inputs": {
+          "b3": 0,
+          "b2": 0,
+          "b1": 0,
+          "b0": 0
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "1011",
+        "inputs": {
+          "b3": 1,
+          "b2": 0,
+          "b1": 1,
+          "b0": 1
+        },
+        "expectReturn": 11
+      },
+      {
+        "name": "1111",
+        "inputs": {
+          "b3": 1,
+          "b2": 1,
+          "b1": 1,
+          "b0": 1
+        },
+        "expectReturn": 15
+      },
+      {
+        "name": "0110",
+        "inputs": {
+          "b3": 0,
+          "b2": 1,
+          "b1": 1,
+          "b0": 0
+        },
+        "expectReturn": 6
+      },
+      {
+        "name": "1000",
+        "inputs": {
+          "b3": 1,
+          "b2": 0,
+          "b1": 0,
+          "b0": 0
+        },
+        "expectReturn": 8
+      }
+    ],
+    "hint": "value = b3*8 + b2*4 + b1*2 + b0, or use shifts: (b3 << 3) | …"
+  },
+  {
+    "id": "count-ones",
+    "title": "Count set bits",
+    "category": "Loops",
+    "difficulty": "Intermediate",
+    "points": 20,
+    "objective": "Use a loop and bitwise operators.",
+    "statement": "Given an 8-bit number n, return how many bits are 1 (its population count). A parity checker uses this value.",
+    "inputSpec": "0 ≤ n ≤ 255",
+    "outputSpec": "number of 1 bits",
+    "examples": [
+      {
+        "input": "n=5 (00000101)",
+        "output": "2"
+      },
+      {
+        "input": "n=255",
+        "output": "8"
+      }
+    ],
+    "constraints": [
+      "Use a loop; maximum 8 iterations is enough."
+    ],
+    "starter": "int count = 0;\nfor (int i = 0; i < 8; i++) {\n  // check bit i\n}\nreturn count;",
+    "tests": [
+      {
+        "name": "n=0",
+        "inputs": {
+          "n": 0
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "n=5",
+        "inputs": {
+          "n": 5
+        },
+        "expectReturn": 2
+      },
+      {
+        "name": "n=255",
+        "inputs": {
+          "n": 255
+        },
+        "expectReturn": 8
+      },
+      {
+        "name": "n=128",
+        "inputs": {
+          "n": 128
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "n=170",
+        "inputs": {
+          "n": 170
+        },
+        "expectReturn": 4
+      },
+      {
+        "name": "n=77",
+        "inputs": {
+          "n": 77
+        },
+        "expectReturn": 4
+      }
+    ],
+    "hint": "(n >> i) & 1 gives bit i."
+  },
+  {
+    "id": "fan-threshold",
+    "title": "Temperature-controlled fan",
+    "category": "Sensor threshold logic",
+    "difficulty": "Beginner",
+    "points": 15,
+    "objective": "Drive an actuator from a sensor threshold.",
+    "statement": "The temperature in °C is provided as temp. Write HIGH to pin 9 (fan) if temp is above 30, otherwise LOW. Also write HIGH to pin 13 (warning LED) if temp is 45 or more, otherwise LOW.",
+    "inputSpec": "temp: number (°C)",
+    "outputSpec": "digitalWrite(9, …) and digitalWrite(13, …)",
+    "examples": [
+      {
+        "input": "temp=32",
+        "output": "pin9=HIGH, pin13=LOW"
+      }
+    ],
+    "constraints": [
+      "Both pins must be written on every run."
+    ],
+    "starter": "const int FAN = 9;\nconst int LED = 13;\n\n// decide and act\n",
+    "tests": [
+      {
+        "name": "temp=25",
+        "inputs": {
+          "temp": 25
+        },
+        "expectPins": {
+          "9": 0,
+          "13": 0
+        }
+      },
+      {
+        "name": "temp=30",
+        "inputs": {
+          "temp": 30
+        },
+        "expectPins": {
+          "9": 0,
+          "13": 0
+        }
+      },
+      {
+        "name": "temp=30.5",
+        "inputs": {
+          "temp": 30.5
+        },
+        "expectPins": {
+          "9": 1,
+          "13": 0
+        }
+      },
+      {
+        "name": "temp=45",
+        "inputs": {
+          "temp": 45
+        },
+        "expectPins": {
+          "9": 1,
+          "13": 1
+        }
+      },
+      {
+        "name": "temp=60",
+        "inputs": {
+          "temp": 60
+        },
+        "expectPins": {
+          "9": 1,
+          "13": 1
+        }
+      }
+    ],
+    "hint": "Use two independent if/else statements."
+  },
+  {
+    "id": "hysteresis",
+    "title": "Thermostat with hysteresis",
+    "category": "Embedded programming",
+    "difficulty": "Intermediate",
+    "points": 25,
+    "objective": "Implement hysteresis to avoid relay chatter.",
+    "statement": "A heater was previously in state prev (1=on). Turn it ON when temp < 18, OFF when temp > 22, and otherwise keep the previous state. Return the new state.",
+    "inputSpec": "temp (°C), prev ∈ {0,1}",
+    "outputSpec": "return new heater state 0/1",
+    "examples": [
+      {
+        "input": "temp=20, prev=1",
+        "output": "1"
+      },
+      {
+        "input": "temp=23, prev=1",
+        "output": "0"
+      }
+    ],
+    "constraints": [],
+    "starter": "int state = prev;\n\nreturn state;",
+    "tests": [
+      {
+        "name": "temp=17, prev=0",
+        "inputs": {
+          "temp": 17,
+          "prev": 0
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "temp=20, prev=1",
+        "inputs": {
+          "temp": 20,
+          "prev": 1
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "temp=20, prev=0",
+        "inputs": {
+          "temp": 20,
+          "prev": 0
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "temp=23, prev=1",
+        "inputs": {
+          "temp": 23,
+          "prev": 1
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "temp=18, prev=0",
+        "inputs": {
+          "temp": 18,
+          "prev": 0
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "temp=22, prev=1",
+        "inputs": {
+          "temp": 22,
+          "prev": 1
+        },
+        "expectReturn": 1
+      }
+    ],
+    "hint": "Two if branches; do nothing between 18 and 22 inclusive."
+  },
+  {
+    "id": "pwm-brightness",
+    "title": "Light-dependent LED brightness",
+    "category": "Arduino-style exercises",
+    "difficulty": "Intermediate",
+    "points": 20,
+    "objective": "Map a sensor range to a PWM duty.",
+    "statement": "An LDR gives lux (0–1000). Write analogWrite(5, duty) where duty = 255 when lux ≤ 100, 0 when lux ≥ 800, and linearly decreasing in between (integer, truncate toward zero). Darker room → brighter LED.",
+    "inputSpec": "lux: 0–1000",
+    "outputSpec": "analogWrite(5, duty)",
+    "examples": [
+      {
+        "input": "lux=450",
+        "output": "duty=127"
+      }
+    ],
+    "constraints": [
+      "You may use map() and constrain()."
+    ],
+    "starter": "int duty = 0;\n// compute duty\n\nanalogWrite(5, duty);",
+    "tests": [
+      {
+        "name": "lux=50",
+        "inputs": {
+          "lux": 50
+        },
+        "expectPins": {
+          "5": 255
+        }
+      },
+      {
+        "name": "lux=100",
+        "inputs": {
+          "lux": 100
+        },
+        "expectPins": {
+          "5": 255
+        }
+      },
+      {
+        "name": "lux=450",
+        "inputs": {
+          "lux": 450
+        },
+        "expectPins": {
+          "5": 127
+        }
+      },
+      {
+        "name": "lux=800",
+        "inputs": {
+          "lux": 800
+        },
+        "expectPins": {
+          "5": 0
+        }
+      },
+      {
+        "name": "lux=1000",
+        "inputs": {
+          "lux": 1000
+        },
+        "expectPins": {
+          "5": 0
+        }
+      },
+      {
+        "name": "lux=275",
+        "inputs": {
+          "lux": 275
+        },
+        "expectPins": {
+          "5": 191
+        }
+      }
+    ],
+    "hint": "duty = map(constrain(lux, 100, 800), 100, 800, 255, 0)."
+  },
+  {
+    "id": "moving-average",
+    "title": "Moving average of four samples",
+    "category": "Signal-processing calculations",
+    "difficulty": "Beginner",
+    "points": 10,
+    "objective": "Compute a simple FIR filter output.",
+    "statement": "Four sensor samples x0..x3 are provided. Return their mean.",
+    "inputSpec": "x0, x1, x2, x3: numbers",
+    "outputSpec": "(x0+x1+x2+x3)/4",
+    "examples": [
+      {
+        "input": "2, 4, 6, 8",
+        "output": "5"
+      }
+    ],
+    "constraints": [],
+    "starter": "float avg = 0;\n\nreturn avg;",
+    "tests": [
+      {
+        "name": "2,4,6,8",
+        "inputs": {
+          "x0": 2,
+          "x1": 4,
+          "x2": 6,
+          "x3": 8
+        },
+        "expectReturn": 5
+      },
+      {
+        "name": "1,1,1,1",
+        "inputs": {
+          "x0": 1,
+          "x1": 1,
+          "x2": 1,
+          "x3": 1
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "10,0,0,0",
+        "inputs": {
+          "x0": 10,
+          "x1": 0,
+          "x2": 0,
+          "x3": 0
+        },
+        "expectReturn": 2.5
+      },
+      {
+        "name": "3.5,2.5,1,1",
+        "inputs": {
+          "x0": 3.5,
+          "x1": 2.5,
+          "x2": 1,
+          "x3": 1
+        },
+        "expectReturn": 2
+      }
+    ],
+    "hint": "Add the four inputs and divide by 4."
+  },
+  {
+    "id": "snr-db",
+    "title": "Signal-to-noise ratio in dB",
+    "category": "Signal-processing calculations",
+    "difficulty": "Intermediate",
+    "points": 15,
+    "objective": "Use logarithms for power ratios.",
+    "statement": "Given signal power S and noise power N (watts), return the SNR in decibels.",
+    "inputSpec": "S > 0, N > 0",
+    "outputSpec": "10·log10(S/N)",
+    "examples": [
+      {
+        "input": "S=100, N=1",
+        "output": "20"
+      }
+    ],
+    "constraints": [
+      "Answer accepted within ±0.01 dB."
+    ],
+    "starter": "// log10() is available\nreturn 0;",
+    "tests": [
+      {
+        "name": "S=100, N=1",
+        "inputs": {
+          "S": 100,
+          "N": 1
+        },
+        "expectReturn": 20,
+        "tolerance": 0.01
+      },
+      {
+        "name": "S=1, N=1",
+        "inputs": {
+          "S": 1,
+          "N": 1
+        },
+        "expectReturn": 0,
+        "tolerance": 0.01
+      },
+      {
+        "name": "S=2, N=1",
+        "inputs": {
+          "S": 2,
+          "N": 1
+        },
+        "expectReturn": 3.010299956639812,
+        "tolerance": 0.01
+      },
+      {
+        "name": "S=0.5, N=0.005",
+        "inputs": {
+          "S": 0.5,
+          "N": 0.005
+        },
+        "expectReturn": 20,
+        "tolerance": 0.01
+      }
+    ],
+    "hint": "return 10 * log10(S / N);"
+  },
+  {
+    "id": "seven-segment-even",
+    "title": "Even-number indicator",
+    "category": "Conditional statements",
+    "difficulty": "Beginner",
+    "points": 10,
+    "objective": "Use the modulo operator in a condition.",
+    "statement": "Print 'EVEN' code 1 or 'ODD' code 0 using Serial.println for the number n.",
+    "inputSpec": "n: integer",
+    "outputSpec": "Serial.println(1) if n is even else Serial.println(0)",
+    "examples": [
+      {
+        "input": "n=4",
+        "output": "1"
+      }
+    ],
+    "constraints": [],
+    "starter": "// Serial.println(value) prints a line\n",
+    "tests": [
+      {
+        "name": "n=4",
+        "inputs": {
+          "n": 4
+        },
+        "expectOutput": [
+          "1"
+        ]
+      },
+      {
+        "name": "n=7",
+        "inputs": {
+          "n": 7
+        },
+        "expectOutput": [
+          "0"
+        ]
+      },
+      {
+        "name": "n=0",
+        "inputs": {
+          "n": 0
+        },
+        "expectOutput": [
+          "1"
+        ]
+      },
+      {
+        "name": "n=13",
+        "inputs": {
+          "n": 13
+        },
+        "expectOutput": [
+          "0"
+        ]
+      },
+      {
+        "name": "n=100",
+        "inputs": {
+          "n": 100
+        },
+        "expectOutput": [
+          "1"
+        ]
+      }
+    ],
+    "hint": "if (n % 2 == 0) …"
+  },
+  {
+    "id": "gray-code",
+    "title": "Binary to Gray code",
+    "category": "Problem-solving exercises",
+    "difficulty": "Advanced",
+    "points": 30,
+    "objective": "Use shifts and XOR.",
+    "statement": "Return the Gray code of the integer n (0–255). Adjacent Gray codes differ in exactly one bit — the ordering used by K-maps and rotary encoders.",
+    "inputSpec": "0 ≤ n ≤ 255",
+    "outputSpec": "Gray code value",
+    "examples": [
+      {
+        "input": "n=2",
+        "output": "3"
+      },
+      {
+        "input": "n=7",
+        "output": "4"
+      }
+    ],
+    "constraints": [
+      "Single expression is possible."
+    ],
+    "starter": "return n;",
+    "tests": [
+      {
+        "name": "n=0",
+        "inputs": {
+          "n": 0
+        },
+        "expectReturn": 0
+      },
+      {
+        "name": "n=1",
+        "inputs": {
+          "n": 1
+        },
+        "expectReturn": 1
+      },
+      {
+        "name": "n=2",
+        "inputs": {
+          "n": 2
+        },
+        "expectReturn": 3
+      },
+      {
+        "name": "n=3",
+        "inputs": {
+          "n": 3
+        },
+        "expectReturn": 2
+      },
+      {
+        "name": "n=7",
+        "inputs": {
+          "n": 7
+        },
+        "expectReturn": 4
+      },
+      {
+        "name": "n=8",
+        "inputs": {
+          "n": 8
+        },
+        "expectReturn": 12
+      },
+      {
+        "name": "n=200",
+        "inputs": {
+          "n": 200
+        },
+        "expectReturn": 172
+      }
+    ],
+    "hint": "gray = n ^ (n >> 1)."
+  }
+]

@@ -1,0 +1,102 @@
+/**
+ * Gold-master generator: runs the corpus through the ORIGINAL TypeScript
+ * ChakraScript interpreter and writes corpus.json + gold.json.
+ * Run from repo root:  bun backend/scripts/gold_master.ts
+ */
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { runScript } from "../../src/engines/interpreter";
+
+type Case = { name: string; src: string; inputs?: Record<string, number>; maxSteps?: number };
+
+const solutions: Case[] = [
+  { name: "xor-solution a=0,b=0", src: "int y = (a && !b) || (!a && b);\nreturn y;", inputs: { a: 0, b: 0 } },
+  { name: "xor-solution a=1,b=0", src: "int y = (a && !b) || (!a && b);\nreturn y;", inputs: { a: 1, b: 0 } },
+  { name: "xor-solution a=1,b=1", src: "int y = (a && !b) || (!a && b);\nreturn y;", inputs: { a: 1, b: 1 } },
+  { name: "binary-solution", src: "int value = (b3 << 3) | (b2 << 2) | (b1 << 1) | b0;\nreturn value;", inputs: { b3: 1, b2: 0, b1: 1, b0: 1 } },
+  { name: "count-ones 255", src: "int count = 0;\nfor (int i = 0; i < 8; i++) { if (((n >> i) & 1) == 1) count += 1; }\nreturn count;", inputs: { n: 255 } },
+  { name: "count-ones 77", src: "int count = 0;\nfor (int i = 0; i < 8; i++) { if (((n >> i) & 1) == 1) count += 1; }\nreturn count;", inputs: { n: 77 } },
+  { name: "fan-threshold 30.5", src: "if (temp > 30) digitalWrite(9, HIGH); else digitalWrite(9, LOW);\nif (temp >= 45) digitalWrite(13, HIGH); else digitalWrite(13, LOW);", inputs: { temp: 30.5 } },
+  { name: "fan-threshold 60", src: "if (temp > 30) digitalWrite(9, HIGH); else digitalWrite(9, LOW);\nif (temp >= 45) digitalWrite(13, HIGH); else digitalWrite(13, LOW);", inputs: { temp: 60 } },
+  { name: "hysteresis 20,1", src: "int state = prev;\nif (temp < 18) state = 1;\nif (temp > 22) state = 0;\nreturn state;", inputs: { temp: 20, prev: 1 } },
+  { name: "hysteresis 23,1", src: "int state = prev;\nif (temp < 18) state = 1;\nif (temp > 22) state = 0;\nreturn state;", inputs: { temp: 23, prev: 1 } },
+  { name: "pwm 450", src: "int duty = map(constrain(lux, 100, 800), 100, 800, 255, 0);\nanalogWrite(5, duty);", inputs: { lux: 450 } },
+  { name: "pwm 50", src: "int duty = map(constrain(lux, 100, 800), 100, 800, 255, 0);\nanalogWrite(5, duty);", inputs: { lux: 50 } },
+  { name: "moving-average", src: "float avg = (x0 + x1 + x2 + x3) / 4;\nreturn avg;", inputs: { x0: 3.5, x1: 2.5, x2: 1, x3: 1 } },
+  { name: "snr", src: "return 10 * log10(S / N);", inputs: { S: 0.5, N: 0.005 } },
+  { name: "seven-seg 7", src: "if (n % 2 == 0) Serial.println(1); else Serial.println(0);", inputs: { n: 7 } },
+  { name: "seven-seg 100", src: "if (n % 2 == 0) Serial.println(1); else Serial.println(0);", inputs: { n: 100 } },
+  { name: "gray 200", src: "return n ^ (n >> 1);", inputs: { n: 200 } },
+];
+
+const semantics: Case[] = [
+  { name: "int32 shl overflow", src: "return 1 << 31;" },
+  { name: "int32 shr negative", src: "return (1 << 31) >> 31;" },
+  { name: "precedence xor-and", src: "return 3 ^ 5 & 1;" },
+  { name: "bitwise not", src: "return ~5;" },
+  { name: "negative division", src: "return -7 / 2;" },
+  { name: "negative modulo", src: "return -7 % 2;" },
+  { name: "modulo positive", src: "return 7 % -2;" },
+  { name: "float division", src: "return 10 / 4;" },
+  { name: "one third print", src: "Serial.println(1 / 3);" },
+  { name: "short-circuit and", src: "return 0 && f();" },
+  { name: "short-circuit or", src: "return 1 || f();" },
+  { name: "logic mix", src: "return true && 0 || 2;" },
+  { name: "ternary max", src: "return a > b ? a : b;", inputs: { a: 3, b: 9 } },
+  { name: "nested ternary", src: "return a ? 1 : b ? 2 : 3;", inputs: { a: 0, b: 5 } },
+  { name: "compound ops", src: "int x = 2;\nx += 3;\nx *= x;\nx -= 1;\nx /= 4;\nx %= 3;\nreturn x;" },
+  { name: "shift assigns", src: "int x = 5;\nx <<= 2;\nx >>= 1;\nreturn x;" },
+  { name: "shl assign overflow", src: "int x = 1;\nx <<= 31;\nreturn x;" },
+  { name: "binary literals", src: "return 0b101 + 0x10;" },
+  { name: "point float", src: "return .5 + 1;" },
+  { name: "decl no init", src: "int x;\nreturn x;" },
+  { name: "multi type decl", src: "unsigned const float y = 2.5;\nreturn y;" },
+  { name: "for sum", src: "int s = 0;\nfor (int i = 1; i <= 10; i++) s += i;\nreturn s;" },
+  { name: "while countdown", src: "int n = 5;\nint f = 1;\nwhile (n > 1) { f *= n; n -= 1; }\nreturn f;" },
+  { name: "int cast", src: "return int(3.9) + int(-3.9);" },
+  { name: "print mixed", src: "Serial.println(2.5);\nSerial.println(3);\nSerial.println(-0.5);" },
+  { name: "analog clamp", src: "analogWrite(5, 300);\nanalogWrite(6, -5);\nanalogWrite(7, 127.6);" },
+  { name: "digital truthy", src: "digitalWrite(9, 3);\ndigitalWrite(2, 0);\ndigitalWrite(4, -1);" },
+  { name: "map 1023", src: "return map(1023, 0, 1023, 0, 255);" },
+  { name: "constrain", src: "return constrain(15, 0, 10);" },
+  { name: "constants", src: "pinMode(13, OUTPUT);\ndelay(100);\nreturn PI * 0 + HIGH + LOW;" },
+  { name: "big int add", src: "return 2000000000 + 2000000000;" },
+  { name: "bit fn", src: "return bit(0b1010, 3);" },
+  { name: "return nothing", src: "int x = 1;\nreturn;" },
+  { name: "empty", src: "" },
+  { name: "comments", src: "// line comment\n/* block\ncomment */\nint x = 1; // trailing\nreturn x;" },
+  { name: "pow", src: "return pow(2, 10);" },
+  { name: "min max", src: "return min(3, -2, 7) + max(4, 9);" },
+  { name: "sqrt", src: "return sqrt(2) * 10000;" },
+  { name: "float equality", src: "return 0.1 + 0.2 == 0.3;" },
+  { name: "not precedence", src: "return !(3 > 2) + !0;" },
+  { name: "unary minus double", src: "return - - 5;" },
+  { name: "nested calls", src: "return round(sqrt(pow(3, 2)) + min(2, 4));" },
+  { name: "repeat pins", src: "digitalWrite(9, HIGH);\ndigitalWrite(9, LOW);" },
+];
+
+const errors: Case[] = [
+  { name: "err div by zero", src: "return 1 / 0;" },
+  { name: "err modulo zero", src: "return 5 % 0;" },
+  { name: "err undeclared assign", src: "x = 5;" },
+  { name: "err unknown var", src: "return y;" },
+  { name: "err parse missing semi", src: "int x = 5" },
+  { name: "err parse unexpected", src: "int = 5;" },
+  { name: "err bad number", src: "return 1..2;" },
+  { name: "err unknown fn", src: "return eval('1');" },
+  { name: "err unknown op chars", src: "return 1 @ 2;" },
+  { name: "err missing brace", src: "if (1) { return 1;" },
+  { name: "err comma decl", src: "int y = 3, z = 4;\nreturn y;" },
+  { name: "err increment expr", src: "int x = 2;\nreturn x++ + 1;" },
+  { name: "err step limit", src: "while (1) {}", maxSteps: 1000 },
+  { name: "err digitalWrite args", src: "digitalWrite(9);" },
+  { name: "err code too long", src: "int a = ".padEnd(20001, "1") },
+];
+
+const corpus = [...solutions, ...semantics, ...errors];
+const gold = corpus.map((c) => ({ name: c.name, result: runScript(c.src, c.inputs ?? {}, c.maxSteps ?? 100_000) }));
+
+writeFileSync(resolve(import.meta.dir, "corpus.json"), JSON.stringify(corpus, null, 2));
+writeFileSync(resolve(import.meta.dir, "gold.json"), JSON.stringify(gold, null, 2));
+const failed = gold.filter((g) => !g.result.ok).map((g) => g.name);
+console.log(`Gold master: ${gold.length} cases, ${failed.length} intentionally failing: ${failed.join(", ")}`);

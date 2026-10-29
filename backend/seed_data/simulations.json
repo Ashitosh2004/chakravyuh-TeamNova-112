@@ -1,0 +1,78 @@
+[
+  {
+    "id": "logic-gates",
+    "title": "Logic Gate Laboratory",
+    "difficulty": "Beginner",
+    "description": "Toggle inputs on all seven basic gates and watch outputs and truth tables update.",
+    "lessons": [
+      {
+        "label": "Logic Gates",
+        "href": "/learn/digital-electronics/lesson/logic-gates"
+      },
+      {
+        "label": "Truth Tables",
+        "href": "/learn/digital-electronics/lesson/truth-tables"
+      }
+    ]
+  },
+  {
+    "id": "circuit-builder",
+    "title": "Digital Circuit Builder",
+    "difficulty": "Intermediate",
+    "description": "Place gates, wire them together, evaluate outputs and generate truth tables.",
+    "lessons": [
+      {
+        "label": "Combinational Circuits",
+        "href": "/learn/digital-electronics/lesson/combinational-circuits"
+      }
+    ]
+  },
+  {
+    "id": "signals",
+    "title": "Signal Processing Laboratory",
+    "difficulty": "Beginner",
+    "description": "Shape waveforms, then sample, quantize and reconstruct them.",
+    "lessons": [
+      {
+        "label": "Periodic Signals",
+        "href": "/learn/signals-systems/lesson/periodic-signals"
+      },
+      {
+        "label": "Sampling",
+        "href": "/learn/communication-systems/lesson/sampling"
+      }
+    ]
+  },
+  {
+    "id": "communication",
+    "title": "Communication Systems Laboratory",
+    "difficulty": "Intermediate",
+    "description": "AM and FM modulation, envelope detection and noise/SNR effects (simplified models).",
+    "lessons": [
+      {
+        "label": "Amplitude Modulation",
+        "href": "/learn/communication-systems/lesson/amplitude-modulation"
+      },
+      {
+        "label": "Noise and SNR",
+        "href": "/learn/communication-systems/lesson/noise-snr"
+      }
+    ]
+  },
+  {
+    "id": "sensors",
+    "title": "Sensor & IoT Laboratory",
+    "difficulty": "Beginner",
+    "description": "Virtual temperature, light, distance and motion sensors driving LEDs, fans and buzzers.",
+    "lessons": [
+      {
+        "label": "Sensor Interfaces",
+        "href": "/learn/embedded-systems/lesson/sensor-interfaces"
+      },
+      {
+        "label": "Actuator Control",
+        "href": "/learn/embedded-systems/lesson/actuator-control"
+      }
+    ]
+  }
+]

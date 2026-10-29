@@ -1,0 +1,907 @@
+[
+  {
+    "name": "xor-solution a=0,b=0",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 10,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "xor-solution a=1,b=0",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 8,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "xor-solution a=1,b=1",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 11,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "binary-solution",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 16,
+      "returnValue": 11
+    }
+  },
+  {
+    "name": "count-ones 255",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 138,
+      "returnValue": 8
+    }
+  },
+  {
+    "name": "count-ones 77",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 130,
+      "returnValue": 4
+    }
+  },
+  {
+    "name": "fan-threshold 30.5",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "9": 1,
+        "13": 0
+      },
+      "pinLog": [
+        {
+          "pin": 9,
+          "value": 1
+        },
+        {
+          "pin": 13,
+          "value": 0
+        }
+      ],
+      "steps": 16
+    }
+  },
+  {
+    "name": "fan-threshold 60",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "9": 1,
+        "13": 1
+      },
+      "pinLog": [
+        {
+          "pin": 9,
+          "value": 1
+        },
+        {
+          "pin": 13,
+          "value": 1
+        }
+      ],
+      "steps": 16
+    }
+  },
+  {
+    "name": "hysteresis 20,1",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 12,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "hysteresis 23,1",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 14,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "pwm 450",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "5": 127
+      },
+      "pinLog": [
+        {
+          "pin": 5,
+          "value": 127
+        }
+      ],
+      "steps": 14
+    }
+  },
+  {
+    "name": "pwm 50",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "5": 255
+      },
+      "pinLog": [
+        {
+          "pin": 5,
+          "value": 255
+        }
+      ],
+      "steps": 14
+    }
+  },
+  {
+    "name": "moving-average",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 12,
+      "returnValue": 2
+    }
+  },
+  {
+    "name": "snr",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 7,
+      "returnValue": 20
+    }
+  },
+  {
+    "name": "seven-seg 7",
+    "result": {
+      "ok": true,
+      "output": [
+        "0"
+      ],
+      "pins": {},
+      "pinLog": [],
+      "steps": 9
+    }
+  },
+  {
+    "name": "seven-seg 100",
+    "result": {
+      "ok": true,
+      "output": [
+        "1"
+      ],
+      "pins": {},
+      "pinLog": [],
+      "steps": 9
+    }
+  },
+  {
+    "name": "gray 200",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": 172
+    }
+  },
+  {
+    "name": "int32 shl overflow",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": -2147483648
+    }
+  },
+  {
+    "name": "int32 shr negative",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": -1
+    }
+  },
+  {
+    "name": "precedence xor-and",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": 2
+    }
+  },
+  {
+    "name": "bitwise not",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 3,
+      "returnValue": -6
+    }
+  },
+  {
+    "name": "negative division",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 5,
+      "returnValue": -3.5
+    }
+  },
+  {
+    "name": "negative modulo",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 5,
+      "returnValue": -1
+    }
+  },
+  {
+    "name": "modulo positive",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 5,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "float division",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 2.5
+    }
+  },
+  {
+    "name": "one third print",
+    "result": {
+      "ok": true,
+      "output": [
+        "0.3333"
+      ],
+      "pins": {},
+      "pinLog": [],
+      "steps": 5
+    }
+  },
+  {
+    "name": "short-circuit and",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 3,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "short-circuit or",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 3,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "logic mix",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "ternary max",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": 9
+    }
+  },
+  {
+    "name": "nested ternary",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": 2
+    }
+  },
+  {
+    "name": "compound ops",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 14,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "shift assigns",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 8,
+      "returnValue": 10
+    }
+  },
+  {
+    "name": "shl assign overflow",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": -2147483648
+    }
+  },
+  {
+    "name": "binary literals",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 21
+    }
+  },
+  {
+    "name": "point float",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 1.5
+    }
+  },
+  {
+    "name": "decl no init",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "multi type decl",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 2.5
+    }
+  },
+  {
+    "name": "for sum",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 80,
+      "returnValue": 55
+    }
+  },
+  {
+    "name": "while countdown",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 42,
+      "returnValue": 120
+    }
+  },
+  {
+    "name": "int cast",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 7,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "print mixed",
+    "result": {
+      "ok": true,
+      "output": [
+        "2.5000",
+        "3",
+        "-0.5000"
+      ],
+      "pins": {},
+      "pinLog": [],
+      "steps": 10
+    }
+  },
+  {
+    "name": "analog clamp",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "5": 255,
+        "6": 0,
+        "7": 128
+      },
+      "pinLog": [
+        {
+          "pin": 5,
+          "value": 255
+        },
+        {
+          "pin": 6,
+          "value": 0
+        },
+        {
+          "pin": 7,
+          "value": 128
+        }
+      ],
+      "steps": 13
+    }
+  },
+  {
+    "name": "digital truthy",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "2": 0,
+        "4": 1,
+        "9": 1
+      },
+      "pinLog": [
+        {
+          "pin": 9,
+          "value": 1
+        },
+        {
+          "pin": 2,
+          "value": 0
+        },
+        {
+          "pin": 4,
+          "value": 1
+        }
+      ],
+      "steps": 13
+    }
+  },
+  {
+    "name": "map 1023",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 7,
+      "returnValue": 255
+    }
+  },
+  {
+    "name": "constrain",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 5,
+      "returnValue": 10
+    }
+  },
+  {
+    "name": "constants",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 15,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "big int add",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 4000000000
+    }
+  },
+  {
+    "name": "bit fn",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "return nothing",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 3
+    }
+  },
+  {
+    "name": "empty",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0
+    }
+  },
+  {
+    "name": "comments",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "pow",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 1024
+    }
+  },
+  {
+    "name": "min max",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 10,
+      "returnValue": 7
+    }
+  },
+  {
+    "name": "sqrt",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 5,
+      "returnValue": 14142.135623730952
+    }
+  },
+  {
+    "name": "float equality",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 6,
+      "returnValue": 0
+    }
+  },
+  {
+    "name": "not precedence",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 8,
+      "returnValue": 1
+    }
+  },
+  {
+    "name": "unary minus double",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "returnValue": 5
+    }
+  },
+  {
+    "name": "nested calls",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 10,
+      "returnValue": 5
+    }
+  },
+  {
+    "name": "repeat pins",
+    "result": {
+      "ok": true,
+      "output": [],
+      "pins": {
+        "9": 0
+      },
+      "pinLog": [
+        {
+          "pin": 9,
+          "value": 1
+        },
+        {
+          "pin": 9,
+          "value": 0
+        }
+      ],
+      "steps": 8
+    }
+  },
+  {
+    "name": "err div by zero",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "error": "Division by zero"
+    }
+  },
+  {
+    "name": "err modulo zero",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 4,
+      "error": "Modulo by zero"
+    }
+  },
+  {
+    "name": "err undeclared assign",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 1,
+      "error": "Line 1: 'x' is not declared"
+    }
+  },
+  {
+    "name": "err unknown var",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 2,
+      "error": "Line 1: 'y' is not defined"
+    }
+  },
+  {
+    "name": "err parse missing semi",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Expected ';' but found 'end of code'"
+    }
+  },
+  {
+    "name": "err parse unexpected",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Unexpected '='"
+    }
+  },
+  {
+    "name": "err bad number",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Invalid number"
+    }
+  },
+  {
+    "name": "err unknown fn",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Unexpected character '''"
+    }
+  },
+  {
+    "name": "err unknown op chars",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Unexpected character '@'"
+    }
+  },
+  {
+    "name": "err missing brace",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Missing '}'"
+    }
+  },
+  {
+    "name": "err comma decl",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 1: Expected ';' but found ','"
+    }
+  },
+  {
+    "name": "err increment expr",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Line 2: Expected ';' but found '++'"
+    }
+  },
+  {
+    "name": "err step limit",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 1001,
+      "error": "Step limit of 1000 exceeded — check for an infinite loop."
+    }
+  },
+  {
+    "name": "err digitalWrite args",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 3,
+      "error": "Line 1: digitalWrite(pin, value) needs 2 arguments"
+    }
+  },
+  {
+    "name": "err code too long",
+    "result": {
+      "ok": false,
+      "output": [],
+      "pins": {},
+      "pinLog": [],
+      "steps": 0,
+      "error": "Code is too long (limit 20,000 characters)."
+    }
+  }
+]

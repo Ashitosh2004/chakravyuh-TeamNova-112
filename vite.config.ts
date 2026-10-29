@@ -12,4 +12,9 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // Local launcher contract (Run.bat): serve on 127.0.0.1:5173 so cookies share
+    // the host with the API on 127.0.0.1:8000. CLI flags in Run.bat reinforce this.
+    server: { host: "127.0.0.1", port: 5173 },
+  },
 });
